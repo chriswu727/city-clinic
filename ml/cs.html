@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>城市醫療｜診所簡介</title>
+       <script src="https://cdn.tailwindcss.com"></script>
+        <meta name='viewport' content='width=device-width, initial-scale=0.45'>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+        }
+    </style>
+     <link rel="stylesheet" href="../css/sy/5.css">
+    <style>
+  
+    
+    body {
+         margin: 0;
+        font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+           
+           
+        }
+   
+   
+   
+   /* 顶部横条 */
+.top-bar {
+    background-color: #d4b679;
+    color: black;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    position: relative;
+    z-index: 100;
+}
+
+/* 顶部导航区 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 40px;
+    background-color: transparent;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    border-bottom: 1px solid rgba(255, 255, 255, 1); /* 半透明白线 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* 新增：确保padding不会增加总宽度 */
+}
+
+.logo img {
+    height: 40px;
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+}
+
+.nav-links {
+    width: auto; /* 修改：去掉固定30%宽度 */
+    display: flex;
+    gap: clamp(15px, 5vw, 40px); /* 关键：动态间距，小屏幕近，大屏幕远 */
+    position: relative;
+    align-items: center; /* 确保链接垂直居中 */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: clamp(14px, 2vw, 15px); /* 动态字体大小 */
+    position: relative;
+    white-space: nowrap; /* 防止文字换行 */
+}
+
+/* 下拉区域 */
+.dropdown {
+    position: absolute;
+    top: 58px;
+    left: -300px;
+    width: 1000px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 100;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+    pointer-events: none;
+}
+
+.dropdown.show {
+    opacity: 1;
+    max-height: 900px;
+    pointer-events: auto;
+}
+
+.dropdown a {
+    display: inline-block;
+    width: calc(30% - 10px);
+    margin: 5px;
+    text-align: left;
+    color: #333333;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 0;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.dropdown a:hover {
+    color: #d4b679;
+}
+
+/* 响应式调整 - 平板设备 */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 20px 30px;
+    }
+    
+    .dropdown {
+        width: 800px;
+        left: -200px;
+    }
+}
+
+/* 响应式调整 - 手机设备 */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+        top: 30px; /* 调整与顶部横条的距离 */
+    }
+    
+    .logo img {
+        height: 35px; /* 缩小logo */
+    }
+    
+    .dropdown {
+        width: 90vw; /* 适应屏幕宽度 */
+        left: 50%;
+        transform: translateX(-50%); /* 居中显示 */
+        top: 45px; /* 调整距离 */
+    }
+    
+    .dropdown a {
+        width: calc(50% - 10px); /* 手机端一行显示两个 */
+    }
+}
+
+/* 极小屏幕优化 */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+    
+    .nav-links {
+        gap: 10px; /* 进一步缩小间距 */
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .dropdown a {
+        width: 100%; /* 极小屏幕一行显示一个 */
+    }
+}
+   
+   
+   
+   
+    /* 视频背景容器 */
+    .hero {
+        position: relative; 
+        z-index: 50;
+        width: 100%;
+        overflow: hidden;
+    }
+    .hero video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 保持视频比例并覆盖整个容器 */
+        display: block;
+    }
+    
+    /* 悬浮联系我们文字 */
+    .contact-vv {
+       position: absolute;
+        top: 70%;
+        left: 70%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 20px;
+        z-index: 60;
+        font-weight: 100;
+         text-decoration: none;
+    }
+    
+   
+    
+    
+    .contact-oo {
+        position: absolute;
+        top: 60%;
+        left: 30%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 90px;
+        z-index: 60;
+        font-weight: 100;
+         text-decoration: none;
+    }
+    
+    
+    
+    
+    
+     .right-text-gsjs {
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 700px;
+    }
+    @media (max-width: 900px) {
+      .container-gsjs {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .left-box-gsjs, .right-text-gsjs {
+        max-width: 100%;
+      }
+</style>
+  </head>
+  <body>
+    <!-- 顶部导航（不变） -->
+
+   <div class="navbar">
+    <div class="logo">
+        <a href="#"><img src="img/sy/logo.png" alt="LOGO"></a>
+    </div>
+    <div class="nav-links">
+        <a href="关于我们.html">关于我们</a>
+
+        <!-- 医美项目菜单 -->
+        <div class="menu-item">
+            <a href="#" id="menu-trigger">医美项目</a>
+            <div class="dropdown" id="dropdown-menu">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>
+        </div>
+
+        <a href="女性私密.html">女性私密</a>
+        <a href="医疗护理产品.html">医疗护理产品</a>
+        <a href="最新活动.html">最新活动</a>
+        <a href="联系我们.html">联系我们</a>
+    </div>
+</div>
+
+    <!-- 图片背景（替换原视频背景） -->
+    <div class="hero">
+        <!-- 图片路径直接写在img标签中，而非CSS，需替换为你的实际图片路径 -->
+        <img src="../img/sy/11.jpg" alt="诊所背景图">
+        <!-- 悬浮文字（不变） -->
+        <p class="contact-oo">联系我们</p>
+        <p class="contact-vv">我们期待为您提供专业的医疗服务，欢迎随时联系我们</p>
+    </div>
+    
+    
+   
+
+   
+   
+   
+    <!-- 公司介绍区 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-3/5">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-6 relative inline-block">
+                        关于我们
+                        <span class="absolute -bottom-2 left-0 w-16 h-1 bg-secondary"></span>
+                    </h2>
+                    <div class="text-gray-700 leading-relaxed text-lg space-y-4">
+                        <p>
+                            城市醫療是由王心詠醫生在2009年成立。至今，協同他於2002年成立的 Richmond Medical Center，盡心竭力服務廣大病人。
+                        </p>
+                        <p>
+                            作为產科專科醫生和家庭醫生，王醫師在20多年間有幸迎接了5000多位新生命的到來。在陪伴、幫助和支持5000多位媽媽度過人生轉折點後，王醫師對女性不同階段的身心變化與需求，積累了深刻理解与感悟。
+                        </p>
+                        <p>
+                            於是2019年，「城市卓越醫療和醫學美容中心」應運而生，旨在為更多人提供全方位健康與美麗服務。我們願所有的人，都能散發出由內而外，由外而內的健康美麗的光輝！
+                        </p>
+                    </div>
+                </div>
+                <div class="md:w-2/5 rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://picsum.photos/id/1084/800/600" alt="医疗中心环境展示，温馨专业的医疗环境" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主医师介绍区 -->
+    <section class="py-20 bg-neutral">
+        <div class="container mx-auto px-6">
+            <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-12 text-center relative inline-block mx-auto">
+                主医师介绍
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-secondary"></span>
+            </h2>
+
+            <div class="flex flex-col lg:flex-row gap-10 items-center">
+                <div class="lg:w-1/3">
+                    <div class="rounded-xl overflow-hidden shadow-xl border-4 border-white">
+                        <img src="https://picsum.photos/id/1076/600/800" alt="王心咏医师专业肖像照，穿着白大褂，背景简洁" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-primary mb-2">Dr. XIN YONG WANG MD CCFP</h3>
+                        <h4 class="text-2xl font-bold mb-4">王心咏医师</h4>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            <span class="font-medium">全科医师 | 产科医师 | 医美医师</span>
+                        </p>
+
+                        <h5 class="text-xl font-bold text-primary mb-4 relative inline-block">
+                            医师荣誉 & 资质
+                            <span class="absolute -bottom-2 left-0 w-12 h-1 bg-secondary"></span>
+                        </h5>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-gray-700">
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>列治文总医院及BC省妇产医院资深顾问医师</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大家庭医师协会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>美国激光医学学会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大医美学会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>BC省及安大略省执业医师</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大皇家医学会顾问</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>中国医师协会资深顾问</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大华人医师协会主席</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>世界华人全科医师协会会长</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>世界华人医师协会理事</span>
+                            </div>
+                            <div class="flex items-start md:col-span-2">
+                                <i class="fa fa-trophy text-secondary mt-1 mr-2"></i>
+                                <span>2019年霍英东杰出华人医师奖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 医疗团队区 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-12 text-center relative inline-block mx-auto">
+                我们的专业团队
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-secondary"></span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 医师团队 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-user-md text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Physicians（医师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Dr. Xin Wang
+                            </span>
+                            <img src="https://picsum.photos/id/1012/100/100" alt="Dr. Xin Wang的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Dr. Joanne Jia
+                            </span>
+                            <img src="https://picsum.photos/id/1027/100/100" alt="Dr. Joanne Jia的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 注册护士 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-stethoscope text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Registered Nurses（注册护士）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Jessica Li
+                            </span>
+                            <img src="https://picsum.photos/id/1062/100/100" alt="Jessica Li的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Jolie Tseng (Taiwan)
+                            </span>
+                            <img src="https://picsum.photos/id/1000/100/100" alt="Jolie Tseng的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 医美师 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-leaf text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Medical Aesthetician（医美师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Stacey Wang
+                            </span>
+                            <img src="https://picsum.photos/id/1005/100/100" alt="Stacey Wang的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Sandy Zhang
+                            </span>
+                            <img src="https://picsum.photos/id/1011/100/100" alt="Sandy Zhang的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 激光技师 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-lightbulb-o text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Laser Technician（激光技师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Lynn Yang
+                            </span>
+                            <img src="https://picsum.photos/id/1025/100/100" alt="Lynn Yang的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 会员服务 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover md:col-span-2 lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-users text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Member Services（会员服务）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Crystal Yuan
+                            </span>
+                            <img src="https://picsum.photos/id/1003/100/100" alt="Crystal Yuan的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <div class="containerii">
+    <!-- 左侧区域 -->
+    <div class="left-col">
+      <div class="logo">
+        <!-- 替换为实际 LOGO 图片路径 -->
+        <img src="../img/sy/logo.png" alt="Logo">
+        <div class="title">VANCOUVER<br>LASER & SKIN CARE<br>CENTRE</div>
+      </div>
+      <div class="address">
+        <p>Vancouver 溫哥華</p>
+        <p>Neelu Brachua Center </p>
+        <p>#305-550 West Broadway </p>
+        <p>#305-550 West Broadway </p>
+        <p>V5Z 1E9</p>
+      </div>
+      <div class="time">
+        <p>週一     9:30 AM- 5:00 PM</p>
+        <p>週二     9:30 AM- 5:00 PM</p>
+        <p>週三     9:30 AM- 5:00 PM</p>
+        <p>週四     9:30 AM- 5:00 PM</p>
+        <p>週五     9:30 AM- 5:00 PM</p>
+        <p>週六     预约</p>
+        <p>週日     预约</p>
+      </div>
+    </div>
+    <!-- 竖线分隔 -->
+    <div class="dividertty"></div>
+    <!-- 中间区域 -->
+    <div class="middle-col">
+      <div class="contact">
+        <p>電話：604-278-5010</p>
+        <p>傳真：604-278-5197</p>
+        <p>電郵：info@vandoctors.com</p>
+        
+        <br>
+         <p>Richmond 列治文</p>
+        <p>Richmond Medical Center </p>
+        <p>#630-6388 No.3 Rd. </p>
+                <p>Richmond, BC, Canada</p>
+                 <p>V6Y 0L4</p>
+      </div>
+      <p><a href="#">联系我们</a></p>
+    </div>
+    <!-- 竖线分隔 -->
+    <div class="dividertty"></div>
+    <!-- 右侧区域 -->
+    <div class="right-col">
+      <div class="qr-code">
+        <!-- 替换为实际二维码图片路径 -->
+        <img src="img/sy/2-1.jpg" alt="QR Code">
+        <p>成為“城市卓越醫療&醫美中心”至尊會員，享受360度無微不致的醫療關懷，請電郵 ​member@vandoctors.com</p>
+      </div>
+    
+    </div>
+  </div>
+  <div class="footer">
+    <p>Privacy + Terms</p>
+    <p>©2025 Vancouver Laser + Skin Care Centre</p>
+    <p>Website by Studiothink</p>
+  </div>
+
+    <!-- 交互脚本（不变） -->
+    <script>
+    const menuTrigger = document.getElementById('menu-trigger');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    let hideTimeout;
+
+    function showMenu() {
+        clearTimeout(hideTimeout);
+        dropdownMenu.classList.add('show');
+    }
+
+    function hideMenu() {
+        hideTimeout = setTimeout(() => {
+            dropdownMenu.classList.remove('show');
+        }, 500);
+    }
+
+    menuTrigger.addEventListener('mouseenter', showMenu);
+    dropdownMenu.addEventListener('mouseenter', showMenu);
+    menuTrigger.addEventListener('mouseleave', hideMenu);
+    dropdownMenu.addEventListener('mouseleave', hideMenu);
+
+    // 加载下拉菜单内容（不变）
+    function loadHtmlFiles() {
+        fetch('get_html_files.php')
+            .then(response => response.json())
+            .then(files => {
+                dropdownMenu.innerHTML = '';
+                files.forEach(file => {
+                    const link = document.createElement('a');
+                    link.href = file.path;
+                    const displayName = file.name.replace('.html', '');
+                    link.textContent = displayName;
+                    dropdownMenu.appendChild(link);
+                });
+            })
+            .catch(error => console.error('Error loading HTML files:', error));
+    }
+
+    window.addEventListener('DOMContentLoaded', loadHtmlFiles);
+    </script>
+    
+    
+    
+    
+    
+  </body>
+</html>

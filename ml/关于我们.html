@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>关于我们介</title>
+     <link rel="icon" href="../img/sy/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=0.45'>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/sy/5.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+             overflow-x: hidden;
+        }
+
+        /* 顶部横条 */
+        .top-bar {
+            background-color: #d4b679;
+            color: black;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 顶部导航区 */
+        .navbar {
+           display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            background-color: transparent;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 1px 2px rgba(0, 10, 0, 0.1);
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.2));
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+             transform: scale(1.3) translateY(10px);
+        }
+
+        .nav-links {
+            width: auto; /* 修改：去掉固定30%宽度 */
+            display: flex;
+            gap: clamp(15px, 5vw, 40px); /* 关键：动态间距，小屏幕近，大屏幕远 */
+            position: relative;
+            align-items: center; /* 确保链接垂直居中 */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: clamp(14px, 2vw, 15px); /* 动态字体大小 */
+            position: relative;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        /* 下拉区域 */
+        .dropdown {
+            position: absolute;
+            top: 58px;
+            left: -300px;
+            width: 1000px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 100;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.4s ease;
+            pointer-events: none;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            max-height: 900px;
+            pointer-events: auto;
+        }
+
+        .dropdown a {
+            display: inline-block;
+            width: calc(30% - 10px);
+            margin: 5px;
+            text-align: left;
+            color: #333333;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .dropdown a:hover {
+            color: #d4b679;
+        }
+
+       
+
+        /* 响应式调整 - 手机设备 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                top: 30px; /* 调整与顶部横条的距离 */
+            }
+            .logo img {
+                height: 35px; /* 缩小logo */
+            }
+            .dropdown {
+                width: 90vw; /* 适应屏幕宽度 */
+                left: 50%;
+                transform: translateX(-50%); /* 居中显示 */
+                top: 45px; /* 调整距离 */
+            }
+            .dropdown a {
+                width: calc(50% - 10px); /* 手机端一行显示两个 */
+            }
+        }
+
+        /* 极小屏幕优化 */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+            .nav-links {
+                gap: 10px; /* 进一步缩小间距 */
+            }
+            .logo img {
+                height: 30px;
+            }
+            .dropdown a {
+                width: 100%; /* 极小屏幕一行显示一个 */
+            }
+        }
+
+        /* 关键修改：背景图容器样式 */
+        .hero {
+            position: relative; 
+            z-index: 50;
+            width: 100%;
+            height: 90vh; /* 1. 让容器占满屏幕高度 */
+            overflow: hidden; /* 2. 隐藏超出容器的图片部分 */
+        }
+        /* 关键修改：背景图样式 */
+        .hero img {
+            position: absolute; /* 3. 绝对定位，脱离文档流便于控制 */
+            top: 0;
+            left: 0;
+            width: 100%; /* 4. 宽度铺满屏幕 */
+            height: 100%; /* 5. 高度铺满容器 */
+            object-fit: cover; /* 6. 保持图片比例，同时覆盖整个容器（裁剪多余部分） */
+            display: block;
+        }
+        
+        /* 悬浮联系我们文字 */
+        .contact-vv {
+            position: absolute;
+            top: 70%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+        }
+        .contact-oo {
+            position: absolute;
+            top: 60%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 90px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+        }
+
+        /* 响应式调整悬浮文字（避免小屏幕文字过大/位置错乱） */
+        @media (max-width: 768px) {
+            .contact-oo {
+                font-size: 40px; /* 缩小大标题 */
+                top: 55%;
+                left: 50%; /* 居中显示 */
+            }
+            .contact-vv {
+                font-size: 16px; /* 缩小副标题 */
+                top: 70%;
+                left: 50%; /* 居中显示 */
+                text-align: center;
+                width: 80%; /* 限制宽度，避免换行异常 */
+            }
+        }
+
+        .right-text-gsjs {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+        @media (max-width: 900px) {
+            .container-gsjs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .left-box-gsjs, .right-text-gsjs {
+                max-width: 100%;
+            }
+        }
+
+         /* 底部导航栏 */
+.containerii {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    box-sizing: border-box;
+    gap: 20px;
+ 
+}
+.footer-nav-wrapper {
+      background: linear-gradient(to bottom, #ffffff, #F5F0D9	);
+    width: 100%;
+    margin: 0;
+}
+        .dividertty {
+            width: 1px;
+            background-color: #ccc;
+        }
+        .left-col, .middle-col, .right-col {
+            flex: 1;
+            padding: 0 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin-top: 20px;
+        }
+        /* 响应式调整底部容器 */
+        @media (max-width: 768px) {
+            .containerii {
+                flex-direction: column;
+            }
+            .dividertty {
+                width: 100%;
+                height: 1px;
+                margin: 20px 0;
+            }
+        }
+        
+        
+        
+        
+        /* 轮播相框基础样式 */
+.team-carousel {
+    width: 100%;
+    max-width: 800px; /* 相框宽度，可调整 */
+    height: 600px; /* 相框高度，可调整 */
+    margin: 20px auto 0; /* 上下间距+水平居中 */
+    position: relative;
+    overflow: hidden;
+    border: 8px solid #fff; /* 相框边框 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 相框阴影 */
+    border-radius: 8px; /* 相框圆角，可选 */
+}
+/* 轮播图片容器 */
+.carousel-slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+/* 单张轮播图片样式 */
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* 默认隐藏 */
+    transition: opacity 0.8s ease; /* 切换过渡效果 */
+}
+/* 活跃图片显示 */
+.carousel-slide.active {
+    opacity: 1;
+}
+/* 轮播图片适配 */
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 保持比例填充相框，裁剪多余部分 */
+}
+/* 轮播指示器（可选，方便查看当前张数） */
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5); /* 未激活指示器颜色 */
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.carousel-indicator.active {
+    background: #C8A96A; /* 激活指示器颜色（匹配secondary色） */
+}
+
+/* 滚动时显示的悬浮联系按钮 */
+        .floating-contact {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .floating-contact.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-contact a {
+            display: inline-block;
+            background-color: #0F3460;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .floating-contact a:hover {
+            background-color: #1a4a8a;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式调整悬浮按钮 */
+        @media (max-width: 768px) {
+            .floating-contact {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .floating-contact a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+        
+          .xz{
+             font-size: 12px;
+        }
+        
+    </style>
+  </head>
+  <body>
+    <!-- 顶部导航（不变） -->
+   <div class="navbar">
+    <div class="logo">
+        <a href="../index.html"><img src="../img/sy/logo.png" alt="LOGO"></a>
+    </div>
+    <div class="nav-links">
+               <a href="关于我们.html">关于我们<br><span class="xz">About Us</span></a>
+
+        <!-- 医美项目菜单 -->
+        <div class="menu-item">
+            <a href="医美项目.html" id="menu-trigger">医美项目<br><span class="xz">Medical aesthetic projects</span></a>
+            <div class="dropdown" id="dropdown-menu">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>    
+        </div>
+
+         <div class="menu-item">
+    <a href="女性私密.html" id="menu-trigger-nxxm">女性私密<br><span class="xz">feminine intimate</span></a>
+    <div class="dropdown" id="dropdown-menu-nxxm">
+        <!-- 动态内容将通过PHP/AJAX加载 -->
+    </div>
+</div>
+        <a href="医疗护理产品.html">医疗护理产品<br><span class="xz">Medical care products</span></a>
+        <a href="最新活动.html">最新活动<br><span class="xz">Latest Activities</span></a>
+        <a href="联系我们.html">联系我们<br><span class="xz">Contact Us</span></a>
+    </div>
+</div>
+ <!-- 滚动时显示的悬浮联系按钮 -->
+    <div class="floating-contact">
+        <a href="联系我们.html">联系我们</a>
+    </div>
+    <!-- 图片背景（替换原视频背景）- 结构不变，样式通过CSS控制 -->
+    <div class="hero">
+        <img src="../img/ml/关于我们.jpg" alt="诊所背景图">
+        <p class="contact-oo">关于我们</p>
+        <p class="contact-vv">由內而外，由外而內的健康美麗<br>20年+专业医疗沉淀，守护您的全生命周期健康</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!-- 公司介绍区 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-3/5">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-6 relative inline-block">
+                        关于我们
+                        <span class="absolute -bottom-2 left-0 w-16 h-1 bg-secondary"></span>
+                    </h2>
+                    <div class="text-gray-700 leading-relaxed text-lg space-y-4">
+                        <p>
+                            城市醫療是由王心詠醫生在2009年成立。至今，協同他於2002年成立的 Richmond Medical Center，盡心竭力服務廣大病人。
+                        </p>
+                        <p>
+                            作为產科專科醫生和家庭醫生，王醫師在20多年間有幸迎接了5000多位新生命的到來。在陪伴、幫助和支持5000多位媽媽度過人生轉折點後，王醫師對女性不同階段的身心變化與需求，積累了深刻理解与感悟。
+                        </p>
+                        <p>
+                            於是2019年，「城市卓越醫療和醫學美容中心」應運而生，旨在為更多人提供全方位健康與美麗服務。我們願所有的人，都能散發出由內而外，由外而內的健康美麗的光輝！
+                        </p>
+                    </div>
+                </div>
+                <div class="md:w-2/5 rounded-2xl overflow-hidden shadow-xl">
+                    <img src="../img/gy/1.jpg" alt="医疗中心环境展示，温馨专业的医疗环境" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主医师介绍区 -->
+    <section class="py-20 bg-neutral">
+        <div class="container mx-auto px-6">
+            <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-12 text-center relative inline-block mx-auto">
+                主医师介绍
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-secondary"></span>
+            </h2>
+
+            <div class="flex flex-col lg:flex-row gap-10 items-center">
+                <div class="lg:w-1/3">
+                    <div class="rounded-xl overflow-hidden shadow-xl border-4 border-white">
+                        <img src="../img/gy/2.jpg" alt="王心咏医师专业肖像照，穿着白大褂，背景简洁" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-primary mb-2">Dr. XIN YONG WANG MD CCFP</h3>
+                        <h4 class="text-2xl font-bold mb-4">王心咏医师</h4>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            <span class="font-medium">全科医师 | 产科医师 | 医美医师</span>
+                        </p>
+
+                        <h5 class="text-xl font-bold text-primary mb-4 relative inline-block">
+                            医师荣誉 & 资质
+                            <span class="absolute -bottom-2 left-0 w-12 h-1 bg-secondary"></span>
+                        </h5>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-gray-700">
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>列治文总医院及BC省妇产医院资深顾问医师</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大家庭医师协会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>美国激光医学学会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大医美学会会员</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>BC省及安大略省执业医师</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大皇家医学会顾问</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>中国医师协会资深顾问</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>加拿大华人医师协会主席</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>世界华人全科医师协会会长</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>世界华人医师协会理事</span>
+                            </div>
+                            <div class="flex items-start md:col-span-2">
+                                <i class="fa fa-trophy text-secondary mt-1 mr-2"></i>
+                                <span>2019年霍英东杰出华人医师奖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 医疗团队区 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] font-bold text-primary mb-12 text-center relative inline-block mx-auto">
+                我们的专业团队
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-secondary"></span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 医师团队 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-user-md text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Physicians（医师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Dr. Xin Wang
+                            </span>
+                            <img src="../img/gy/3-1.jpg" alt="Dr. Xin Wang的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Dr. Joanne Jia
+                            </span>
+                            <img src="../img/gy/3-2.jpg" alt="Dr. Joanne Jia的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 注册护士 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-stethoscope text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Registered Nurses（注册护士）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Jessica Li
+                            </span>
+                            <img src="../img/gy/3-3.jpg" alt="Jessica Li的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Jolie Tseng (Taiwan)
+                            </span>
+                            <img src="../img/gy/3-4.jpg" alt="Jolie Tseng的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 医美师 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-leaf text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Medical Aesthetician（医美师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Stacey Wang
+                            </span>
+                            <img src="../img/gy/3-5.jpg" alt="Stacey Wang的专业照片" class="team-photo">
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Sandy Zhang
+                            </span>
+                            <img src="../img/gy/3-6.jpg" alt="Sandy Zhang的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 激光技师 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-lightbulb-o text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Laser Technician（激光技师）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Lynn Yang
+                            </span>
+                            <img src="../img/gy/3-7." alt="Lynn Yang的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 会员服务 -->
+                <div class="bg-neutral p-6 rounded-xl shadow-md card-hover md:col-span-2 lg:col-span-1">
+                    <div class="flex items-center mb-6">
+                        <i class="fa fa-users text-primary text-3xl mr-4"></i>
+                        <h3 class="text-xl font-bold">Member Services（会员服务）</h3>
+                    </div>
+                    <ul class="text-gray-700 space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center">
+                                <i class="fa fa-angle-right text-secondary mr-2"></i>
+                                Crystal Yuan
+                            </span>
+                            <img src="../img/gy/3-8." alt="Crystal Yuan的专业照片" class="team-photo">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- 团队轮播相框 -->
+<div class="team-carousel">
+    <!-- 轮播图片容器 -->
+    <div class="carousel-slides">
+        <!-- 5张轮播图片（需替换src为实际图片路径） -->
+        <div class="carousel-slide active">
+            <img src="../img/gy/team1.jpg" alt="专业团队工作场景1">
+        </div>
+        <div class="carousel-slide">
+            <img src="../img/gy/team2.jpg" alt="专业团队工作场景2">
+        </div>
+        <div class="carousel-slide">
+            <img src="../img/gy/team3.jpg" alt="专业团队工作场景3">
+        </div>
+        <div class="carousel-slide">
+            <img src="../img/gy/team4.jpg" alt="专业团队工作场景4">
+        </div>
+        <div class="carousel-slide">
+            <img src="../img/gy/team5.jpg" alt="专业团队工作场景5">
+        </div>
+    </div>
+    <!-- 轮播指示器 -->
+    <div class="carousel-indicators">
+        <div class="carousel-indicator active" data-index="0"></div>
+        <div class="carousel-indicator" data-index="1"></div>
+        <div class="carousel-indicator" data-index="2"></div>
+        <div class="carousel-indicator" data-index="3"></div>
+        <div class="carousel-indicator" data-index="4"></div>
+        
+    </div>
+</div>
+    </section>
+
+
+
+
+
+
+
+
+
+<div class="footer-nav-wrapper">
+    <div class="containerii">
+        <!-- 左侧区域 -->
+        <div class="left-col">
+            <div class="logo">
+                <img src="../img/sy/logo.png" alt="Logo">
+                <div class="title">City Medical Prime & Aesthetics</div>
+            </div>
+            <div class="address">
+                <p>Vancouver 溫哥華</p>
+                <p>Neelu Brachua Center </p>
+                <p>#305-550 West Broadway </p>
+                <p>#305-550 West Broadway </p>
+                <p>V5Z 1E9</p>
+            </div>
+            <div class="time">
+                <p>週一     9:30 AM- 5:00 PM</p>
+                <p>週二     9:30 AM- 5:00 PM</p>
+                <p>週三     9:30 AM- 5:00 PM</p>
+                <p>週四     9:30 AM- 5:00 PM</p>
+                <p>週五     9:30 AM- 5:00 PM</p>
+                <p>週六     预约</p>
+                <p>週日     预约</p>
+            </div>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 中间区域 -->
+        <div class="middle-col">
+            <div class="contact">
+                <p>電話：604-278-5010</p>
+                <p>傳真：604-278-5197</p>
+                <p>電郵：info@vandoctors.com</p>
+                <br>
+                <p>Richmond 列治文</p>
+                <p>Richmond Medical Center </p>
+                <p>#630-6388 No.3 Rd. </p>
+                <p>Richmond, BC, Canada</p>
+                <p>V6Y 0L4</p>
+            </div>
+             <p> <a href="联系我们.html" ><button class="ccssbutt">联系我们</button></a></p>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 右侧区域 -->
+        <div class="right-col">
+            <div class="qr-code">
+              <img src="../img/sy/ewm.jpg" alt="QR Code" style="display: block; margin: 0 auto;">
+               <br><!--换行标注-->
+                <p>成為“城市卓越醫療&醫美中心”至尊會員</p>
+                 <br><!--换行标注-->
+                <p>享受360度無微不致的醫療關懷</p>
+                 <br><!--换行标注-->
+               <p> 請電郵 ​member@vandoctors.com</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 交互脚本（不变） -->
+    <script>
+        const menuTrigger = document.getElementById('menu-trigger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        let hideTimeout;
+
+        function showMenu() {
+            clearTimeout(hideTimeout);
+            dropdownMenu.classList.add('show');
+        }
+
+        function hideMenu() {
+            hideTimeout = setTimeout(() => {
+                dropdownMenu.classList.remove('show');
+            }, 500);
+        }
+
+        menuTrigger.addEventListener('mouseenter', showMenu);
+        dropdownMenu.addEventListener('mouseenter', showMenu);
+        menuTrigger.addEventListener('mouseleave', hideMenu);
+        dropdownMenu.addEventListener('mouseleave', hideMenu);
+
+        // 加载下拉菜单内容（不变）
+        function loadHtmlFiles() {
+            fetch('get_html_files.php')
+                .then(response => response.json())
+                .then(files => {
+                    dropdownMenu.innerHTML = '';
+                    files.forEach(file => {
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        const displayName = file.name.replace('.html', '');
+                        link.textContent = displayName;
+                        dropdownMenu.appendChild(link);
+                    });
+                })
+                .catch(error => console.error('Error loading HTML files:', error));
+        }
+
+        window.addEventListener('DOMContentLoaded', loadHtmlFiles);
+    </script>
+     <script>
+    // ---------------------- 新增：女性私密菜单逻辑 ----------------------
+const menuTriggerNxxm = document.getElementById('menu-trigger-nxxm');
+const dropdownMenuNxxm = document.getElementById('dropdown-menu-nxxm');
+let hideTimeoutNxxm;
+
+// 显示女性私密下拉菜单
+function showMenuNxxm() {
+    clearTimeout(hideTimeoutNxxm);
+    dropdownMenuNxxm.classList.add('show');
+}
+
+// 隐藏女性私密下拉菜单
+function hideMenuNxxm() {
+    hideTimeoutNxxm = setTimeout(() => {
+        dropdownMenuNxxm.classList.remove('show');
+    }, 100); // 与医美项目保持一致的延迟隐藏时间
+}
+
+// 绑定鼠标进出事件
+menuTriggerNxxm.addEventListener('mouseenter', showMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseenter', showMenuNxxm);
+menuTriggerNxxm.addEventListener('mouseleave', hideMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseleave', hideMenuNxxm);
+
+// 加载女性私密的HTML文件列表（调用指定PHP：get_html_files_nxxm.php）
+function loadHtmlFilesNxxm() {
+    fetch('get_html_files_nxxm.php') // 这里使用指定的PHP文件
+        .then(response => response.json())
+        .then(files => {
+            dropdownMenuNxxm.innerHTML = '';
+            files.forEach(file => {
+                const link = document.createElement('a');
+                link.href = file.path;
+                const displayName = file.name.replace('.html', ''); // 去除.html后缀
+                link.textContent = displayName;
+                dropdownMenuNxxm.appendChild(link);
+            });
+        })
+        .catch(error => console.error('Error loading 女性私密 HTML files:', error));
+}
+
+// 页面加载时执行女性私密文件加载
+window.addEventListener('DOMContentLoaded', loadHtmlFilesNxxm);
+
+
+
+
+
+
+</script>
+
+<!-- 轮播控制脚本 -->
+<script>
+    // 获取轮播元素
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    let currentIndex = 0;
+    const slideInterval = 3000; // 3秒切换一次
+
+    // 切换到指定索引的图片
+    function goToSlide(index) {
+        // 移除所有活跃状态
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        // 添加当前活跃状态
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        // 更新当前索引
+        currentIndex = index;
+    }
+
+    // 自动切换下一张
+    function nextSlide() {
+        let nextIndex = currentIndex + 1;
+        // 最后一张回到第一张
+        if (nextIndex >= slides.length) nextIndex = 0;
+        goToSlide(nextIndex);
+    }
+
+    // 指示器点击事件（可选，支持手动切换）
+    indicators.forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const index = parseInt(indicator.getAttribute('data-index'));
+            goToSlide(index);
+        });
+    });
+
+    // 启动自动轮播
+    setInterval(nextSlide, slideInterval);
+    </script>
+      <script>
+        // 监听滚动事件，控制悬浮按钮的显示与隐藏
+        window.addEventListener('scroll', function() {
+            const floatingContact = document.querySelector('.floating-contact');
+            // 当滚动超过100px时显示悬浮按钮
+            if (window.scrollY > 100) {
+                floatingContact.classList.add('show');
+            } else {
+                floatingContact.classList.remove('show');
+            }
+        });
+    </script>
+  </body>
+</html>

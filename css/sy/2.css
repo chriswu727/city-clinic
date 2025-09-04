@@ -1,0 +1,58 @@
+/*2行*/
+.container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    .section {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+        align-items: center;
+    }
+    .section img {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 8px;
+    }
+    .section-content {
+        flex: 1;
+        padding: 20px;
+    }
+    .section-content h2 {
+        font-size: 24px;
+        color: #d4b783; /* 类似界面的标题色 */
+        margin-bottom: 20px;
+    }
+    .section-content p {
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+    .buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .buttons button {
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: 1px solid #333;
+        background: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s;
+    }
+    .buttons button:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    /* 响应式 */
+    @media(max-width: 768px) {
+        .section {
+            flex-direction: column;
+        }
+        .section img {
+            max-width: 100%;
+        }
+    }

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>城市醫療｜診所簡介</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=0.45'>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/sy/5.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                        'accent-jjs': '#bfa164',
+            'dark-jjs': '#333333',
+            'light-jjs': '#f8f8f8',
+            'medium-jjs': '#e0e0e0',
+            'darkgray-jjs': '#888888'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        'sans-jjs': ['"Microsoft YaHei"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    
+   
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+            
+            .screen-height-jjs {
+        min-height: 100vh;
+      }
+      .content-auto-jjs {
+        content-visibility: auto;
+      }
+      .text-shadow-jjs {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .divider-jjs {
+        width: 1px;
+        background-color: #ccc;
+      }
+        }
+    </style>
+    
+    
+     
+    
+    
+    
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+            overflow-x: hidden;
+        }
+
+        /* 顶部横条 */
+        .top-bar {
+            background-color: #d4b679;
+            color: black;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 顶部导航区 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            background-color: transparent;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 1px 2px rgba(0, 10, 0, 0.1);
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.2));
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+        }
+
+        .nav-links {
+            width: auto; /* 修改：去掉固定30%宽度 */
+            display: flex;
+            gap: clamp(15px, 5vw, 40px); /* 关键：动态间距，小屏幕近，大屏幕远 */
+            position: relative;
+            align-items: center; /* 确保链接垂直居中 */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: clamp(14px, 2vw, 15px); /* 动态字体大小 */
+            position: relative;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        /* 下拉区域 */
+        .dropdown {
+            position: absolute;
+            top: 58px;
+            left: -300px;
+            width: 1000px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 100;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.4s ease;
+            pointer-events: none;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            max-height: 900px;
+            pointer-events: auto;
+        }
+
+        .dropdown a {
+            display: inline-block;
+            width: calc(30% - 10px);
+            margin: 5px;
+            text-align: left;
+            color: #333333;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .dropdown a:hover {
+            color: #d4b679;
+        }
+
+        /* 响应式调整 - 平板设备 */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 20px 30px;
+            }
+            .dropdown {
+                width: 800px;
+                left: -200px;
+            }
+        }
+
+        /* 响应式调整 - 手机设备 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                top: 30px; /* 调整与顶部横条的距离 */
+            }
+            .logo img {
+                height: 35px; /* 缩小logo */
+            }
+            .dropdown {
+                width: 90vw; /* 适应屏幕宽度 */
+                left: 50%;
+                transform: translateX(-50%); /* 居中显示 */
+                top: 45px; /* 调整距离 */
+            }
+            .dropdown a {
+                width: calc(50% - 10px); /* 手机端一行显示两个 */
+            }
+        }
+
+        /* 极小屏幕优化 */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+            .nav-links {
+                gap: 10px; /* 进一步缩小间距 */
+            }
+            .logo img {
+                height: 30px;
+            }
+            .dropdown a {
+                width: 100%; /* 极小屏幕一行显示一个 */
+            }
+        }
+
+        /* 关键修改：背景图容器样式 */
+        .hero {
+            position: relative; 
+            z-index: 50;
+            width: 100%;
+            height: 90vh; /* 1. 让容器占满屏幕高度 */
+            overflow: hidden; /* 2. 隐藏超出容器的图片部分 */
+        }
+        /* 关键修改：背景图样式 */
+        .hero img {
+            position: absolute; /* 3. 绝对定位，脱离文档流便于控制 */
+            top: 0;
+            left: 0;
+            width: 100%; /* 4. 宽度铺满屏幕 */
+            height: 100%; /* 5. 高度铺满容器 */
+            object-fit: cover; /* 6. 保持图片比例，同时覆盖整个容器（裁剪多余部分） */
+            display: block;
+        }
+        
+        /* 悬浮联系我们文字 */
+        .contact-vv {
+           position: absolute;
+top: 60%;
+left: 10%; /* 关键：靠左定位，距离左侧为0 */
+transform: translateY(-50%); /* 关键：仅保留垂直居中，删除水平居中的-x偏移 */
+color: white;
+font-size: 20px;
+z-index: 60;
+font-weight: 100;
+text-decoration: none;
+/* 可选：如需与左侧保持少量间距，可替换left:0为left:10px（根据需求调整数值） */
+        }
+        .contact-oo {
+      position: absolute;
+top: 50%;
+left: 10%; /* 关键：靠左定位，距离左侧为0 */
+transform: translateY(-50%); /* 关键：仅保留垂直居中，删除水平居中的-x偏移 */
+color: white;
+font-size: 90px;
+z-index: 60;
+font-weight: 100;
+text-decoration: none;
+/* 可选：如需与左侧保持少量间距，可替换left:0为left:10px（根据需求调整数值） */
+        }
+
+        /* 响应式调整悬浮文字（避免小屏幕文字过大/位置错乱） */
+        @media (max-width: 768px) {
+            .contact-oo {
+                font-size: 40px; /* 缩小大标题 */
+                top: 55%;
+                left: 50%; /* 居中显示 */
+            }
+            .contact-vv {
+                font-size: 16px; /* 缩小副标题 */
+                top: 60%;
+                left: 60%; /* 居中显示 */
+                text-align: center;
+                width: 80%; /* 限制宽度，避免换行异常 */
+            }
+        }
+
+        .right-text-gsjs {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+        @media (max-width: 900px) {
+            .container-gsjs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .left-box-gsjs, .right-text-gsjs {
+                max-width: 100%;
+            }
+        }
+
+        /* 补充底部容器样式（避免原CSS缺失导致布局错乱） */
+       .containerii {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px;
+    box-sizing: border-box;
+    gap: 20px;
+ 
+}
+.footer-nav-wrapper {
+     background: linear-gradient(to bottom, #ffffff, #F5F0D9	);
+    width: 100%;
+    margin: 0;
+}
+        .dividertty {
+            width: 1px;
+            background-color: #ccc;
+        }
+        .left-col, .middle-col, .right-col {
+            flex: 1;
+            padding: 0 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin-top: 20px;
+        }
+        /* 响应式调整底部容器 */
+        @media (max-width: 768px) {
+            .containerii {
+                flex-direction: column;
+            }
+            .dividertty {
+                width: 100%;
+                height: 1px;
+                margin: 20px 0;
+            }
+        }
+    </style>
+    
+    
+    
+    
+    
+      <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  
+    .testimonial-section-jjs::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    .testimonial-content-jjs, .testimonial-cta-jjs {
+      position: relative;
+      z-index: 2;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 400; /* 标题字体调细 */
+    }
+    /* 响应式调整分隔线 */
+    @media (max-width: 768px) {
+      .divider-jjs {
+        display: none;
+      }
+    }
+  </style>
+  
+  
+  
+  
+  <style>
+/*问答css*/
+
+    .faq-container-ysja {
+      max-width: 80%;
+      margin: 0 auto;
+       background: #f8f9fa;
+      padding: 40px;
+      color: #333;
+    }
+
+    .faq-title-ysja {
+      font-size: 28px;
+      font-weight: 600;
+      color: #bfa181; /* 类似页面的浅棕色 */
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-item-ysja {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question-ysja {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      background: #fff;
+      transition: background 0.3s ease;
+    }
+
+    .faq-question-ysja:hover {
+      background: #fefefe;
+    }
+
+    /* 箭头图标（可替换为 SVG 或字体图标） */
+    .faq-question-ysja::after {
+      content: "+";
+      font-size: 24px;
+      font-weight: 300;
+      color: #bfa181;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-answer-ysja {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 20px;
+      line-height: 1.6;
+      transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+
+    /* 激活状态 */
+    .faq-item-ysja.active-ysja .faq-question-ysja::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item-ysja.active-ysja .faq-answer-ysja {
+      max-height: 500px; /* 足够容纳内容的高度，可根据实际调整 */
+      opacity: 1;
+      padding: 16px 20px;
+      transition: max-height 0.6s ease, opacity 0.4s ease 0.1s, padding 0.3s ease;
+    }
+
+   
+    /* 滚动时显示的悬浮联系按钮 */
+        .floating-contact {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .floating-contact.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-contact a {
+            display: inline-block;
+            background-color: #0F3460;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .floating-contact a:hover {
+            background-color: #1a4a8a;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式调整悬浮按钮 */
+        @media (max-width: 768px) {
+            .floating-contact {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .floating-contact a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+  </style>
+  
+  
+  </head>
+  <body>
+    <!-- 顶部导航（不变） -->
+   <div class="navbar">
+    <div class="logo">
+        <a href="../../index.html"><img src="../../img/sy/logo.png" alt="LOGO"></a>
+    </div>
+    <div class="nav-links">
+        <a href="../../ml/关于我们.html">关于我们</a>
+
+        <!-- 医美项目菜单 -->
+        <div class="menu-item">
+            <a href="../../ml/医美项目.html" id="menu-trigger">医美项目</a>
+            <div class="dropdown" id="dropdown-menu">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <a href="../../ml/女性私密.html" id="menu-trigger-nxxm">女性私密</a>
+            <div class="dropdown" id="dropdown-menu-nxxm">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>
+        </div>
+        <a href="../../ml/医疗护理产品.html">医疗护理产品</a>
+        <a href="../../ml/最新活动.html">最新活动</a>
+        <a href="../../ml/联系我们.html">联系我们</a>
+    </div>
+</div>
+ <!-- 滚动时显示的悬浮联系按钮 -->
+    <div class="floating-contact">
+        <a href="../../ml/联系我们.html">联系我们</a>
+    </div>
+    <!-- 图片背景（替换原视频背景）- 结构不变，样式通过CSS控制 -->
+    <div class="hero">
+        <img src="" alt="诊所背景图" id="spc文o@图片1">
+        <p class="contact-oo" id="spc文o@标题">止汗针</p>
+        <p class="contact-vv" id="spc文o@文本1">我们期待为您提供专业的医疗服务，欢迎随时联系我们</p>
+    </div>
+
+
+
+
+
+
+
+
+ <div id="section1">
+    <!-- 第一屏：止汗针原理 + 疗程特点（白色背景） -->
+    <section class="screen-height-jjs bg-white flex items-center">
+      <div class="container mx-auto px-6 py-16">
+        <div class="flex flex-col md:flex-row gap-12">
+          <div class="md:w-1/2">
+            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] text-accent-jjs mb-8 text-shadow-jjs" id="spc文o@文本2">止汗针原理</h2>
+            <div class="space-y-6 text-lg">
+              <p id="spc文o@文本3"></p>
+           
+            </div>
+          </div>
+          
+          <!-- 中间分隔线 -->
+          <div class="divider-jjs hidden md:block"></div>
+          
+          <div class="md:w-1/2">
+            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] text-accent-jjs mb-8 text-shadow-jjs" id="spc文o@文本4">疗程特点</h2>
+            <ul class="space-y-6 text-lg">
+              <li class="flex items-start">
+                 <p id="spc文o@文本5"></p>
+              </li>
+               <li>
+                 <img src="" id="spc文o@图片2" alt="Logo" width="80%" >
+                
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 第二屏：适用人群 + 疗程相关（灰色背景） -->
+  <section id="section2" class="screen-height-jjs bg-light-jjs flex items-center">
+    <div class="container mx-auto px-6 py-16">
+      <div class="flex flex-col md:flex-row gap-12">
+        <div class="md:w-1/2">
+          <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] text-accent-jjs mb-8 text-shadow-jjs" id="spc文o@文本6">适用人群</h2>
+          <ul class="space-y-6 text-lg">
+            <li class="flex items-start">
+              <p id="spc文o@文本7"></p>
+            </li>
+           
+            <li>
+                 <img src="" id="spc文o@图片3" alt="Logo" width="80%">
+            </li>
+          </ul>
+        </div>
+        
+        <!-- 中间分隔线 -->
+        <div class="divider-jjs hidden md:block"></div>
+        
+        <div class="md:w-1/2">
+          <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] text-accent-jjs mb-8 text-shadow-jjs" id="spc文o@文本8">疗程相关</h2>
+          <div class="space-y-6 text-lg">
+            <p id="spc文o@文本9"></p>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三屏：预约CTA（带背景图） -->
+<!-- 假设本地图片路径为：images/background.jpg -->
+<section id="section3" class="screen-height-jjs testimonial-section-jjs relative flex items-center overflow-hidden">
+    <!-- 全屏背景图片 -->
+    <img src="../../img/542.jpg" id="spc文o@图片4" alt="全屏背景图片" class="absolute inset-0 w-full h-full object-cover rounded-none shadow-none">
+    
+    <!-- 半透明遮罩层，增强文字可读性 -->
+    <div class="absolute inset-0 bg-black/30 z-10"></div>
+    
+    <div class="container mx-auto px-6 py-16 w-full relative z-20">
+      <div class="flex flex-col lg:flex-row items-center justify-between">
+        <div class="testimonial-content-jjs mb-12 lg:mb-0 max-w-2xl">
+       
+          <p class="text-[clamp(1.2rem,3vw,1.8rem)] leading-relaxed mb-6 text-white" id="spc文o@文本10">
+            在我接受止汗针前，我没办法在工作时脱下外套，因为害怕被看到衬衫上汗湿的痕迹。接受治疗后，让我脱外套举手不尴尬！
+          </p>
+         
+        </div>
+        
+        
+        <div class="testimonial-cta-jjs bg-white p-8 rounded-lg shadow-xl">
+          <h2 class="text-[clamp(1.5rem,3vw,2.2rem)] text-accent-jjs mb-6" id="spc文o@文本21">止汗针</h2>
+          <p class="mb-6 text-gray-700" id="spc文o@文本22" >立即预约</p>
+          <a href="#" class="inline-block px-8 py-3 border-2 border-accent-jjs rounded-full text-dark-jjs text-center w-full">
+            预约专业免费咨询
+          </a>
+          
+          <div class="mt-8 pt-6 border-t border-gray-200">
+            <div class="flex items-center mb-4">
+              <i class="fa fa-phone text-accent-jjs mr-3"></i>
+              <span>咨询热线：400-123-4567</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+
+  <!-- 第四屏：推广区（上下居中） -->
+  <section id="section4" class="screen-height-jjs bg-darkgray-jjs text-white flex items-center">
+    <div class="container mx-auto px-6 py-16">
+      <div class="flex flex-col md:flex-row items-center gap-12 justify-center h-full">
+        <div class="md:w-1/2 order-2 md:order-1 flex items-center justify-center">
+          <img src="" id="spc文o@图片5" alt="止汗针治疗效果展示" class="rounded-lg shadow-2xl w-full max-w-md object-cover">
+        </div>
+        <div class="md:w-1/2 order-1 md:order-2 flex flex-col justify-center">
+          <h2 class="text-[clamp(2rem,5vw,3rem)] mb-8 leading-tight"  id="spc文o@文本11">摆脱汗味，一身清爽干净</h2>
+          <p class="text-xl mb-6" id="spc文o@文本12"></p>
+        
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+<!--问答-->
+<div class="faq-container-ysja">
+ <div class="faq-title-ysja">FAQS</div>
+  
+  <div class="faq-item-ysja">
+    <div class="faq-question-ysja" id="spc文o@文本13"></div>
+    <div class="faq-answer-ysja">
+      <p id="spc文o@文本14"></p>
+     
+    </div>
+  </div>
+
+  <div class="faq-item-ysja">
+    <div class="faq-question-ysja" id="spc文o@文本15"></div>
+    <div class="faq-answer-ysja">
+      <p id="spc文o@文本16"></p>
+    </div>
+  </div>
+
+  <div class="faq-item-ysja">
+    <div class="faq-question-ysja"  id="spc文o@文本17"> </div>
+    <div class="faq-answer-ysja">
+      <p  id="spc文o@文本18"></p>
+    </div>
+  </div>
+
+  <div class="faq-item-ysja">
+    <div class="faq-question-ysja"  id="spc文o@文本19"></div>
+    <div class="faq-answer-ysja">
+      <p  id="spc文o@文本20"></p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="footer-nav-wrapper">
+    <div class="containerii">
+        <!-- 左侧区域 -->
+        <div class="left-col">
+            <div class="logo">
+                <img src="../../img/sy/logo.png" alt="Logo">
+                <div class="title">VANCOUVER<br>LASER & SKIN CARE<br>CENTRE</div>
+            </div>
+            <div class="address">
+                <p>Vancouver 溫哥華</p>
+                <p>Neelu Brachua Center </p>
+                <p>#305-550 West Broadway </p>
+                <p>#305-550 West Broadway </p>
+                <p>V5Z 1E9</p>
+            </div>
+            <div class="time">
+                <p>週一     9:30 AM- 5:00 PM</p>
+                <p>週二     9:30 AM- 5:00 PM</p>
+                <p>週三     9:30 AM- 5:00 PM</p>
+                <p>週四     9:30 AM- 5:00 PM</p>
+                <p>週五     9:30 AM- 5:00 PM</p>
+                <p>週六     预约</p>
+                <p>週日     预约</p>
+            </div>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 中间区域 -->
+        <div class="middle-col">
+            <div class="contact">
+                <p>電話：604-278-5010</p>
+                <p>傳真：604-278-5197</p>
+                <p>電郵：info@vandoctors.com</p>
+                <br>
+                <p>Richmond 列治文</p>
+                <p>Richmond Medical Center </p>
+                <p>#630-6388 No.3 Rd. </p>
+                <p>Richmond, BC, Canada</p>
+                <p>V6Y 0L4</p>
+            </div>
+             <p> <a href="../../ml/联系我们.html" ><button class="ccssbutt">联系我们</button></a></p>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 右侧区域 -->
+        <div class="right-col">
+            <div class="qr-code">
+              <img src="../../img/sy/ewm.jpg" alt="QR Code" style="display: block; margin: 0 auto;">
+               <br><!--换行标注-->
+                <p>成為“城市卓越醫療&醫美中心”至尊會員</p>
+                 <br><!--换行标注-->
+                <p>享受360度無微不致的醫療關懷</p>
+                 <br><!--换行标注-->
+               <p> 請電郵 ​member@vandoctors.com</p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+<script>
+    // 女性私密下拉菜单逻辑
+    const menuTriggerNxxm = document.getElementById('menu-trigger-nxxm');
+    const dropdownMenuNxxm = document.getElementById('dropdown-menu-nxxm');
+    let hideTimeoutNxxm;
+
+    function showMenuNxxm() {
+        clearTimeout(hideTimeoutNxxm);
+        dropdownMenuNxxm.classList.add('show');
+    }
+
+    function hideMenuNxxm() {
+        hideTimeoutNxxm = setTimeout(() => {
+            dropdownMenuNxxm.classList.remove('show');
+        }, 100);
+    }
+
+    menuTriggerNxxm.addEventListener('mouseenter', showMenuNxxm);
+    dropdownMenuNxxm.addEventListener('mouseenter', showMenuNxxm);
+    menuTriggerNxxm.addEventListener('mouseleave', hideMenuNxxm);
+    dropdownMenuNxxm.addEventListener('mouseleave', hideMenuNxxm);
+
+    function loadHtmlFilesNxxm() {
+        fetch('get_html_files_nxxm.php')
+            .then(response => response.json())
+            .then(files => {
+                dropdownMenuNxxm.innerHTML = '';
+                files.forEach(file => {
+                    const link = document.createElement('a');
+                    link.href = file.path;
+                    const displayName = file.name.replace('.html', '');
+                    link.textContent = displayName;
+                    dropdownMenuNxxm.appendChild(link);
+                });
+            })
+            .catch(error => console.error('Error loading 女性私密 HTML files:', error));
+    }
+
+    window.addEventListener('DOMContentLoaded', loadHtmlFilesNxxm);
+</script>
+    <!-- 交互脚本（不变） -->
+    <script>
+        const menuTrigger = document.getElementById('menu-trigger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        let hideTimeout;
+
+        function showMenu() {
+            clearTimeout(hideTimeout);
+            dropdownMenu.classList.add('show');
+        }
+
+        function hideMenu() {
+            hideTimeout = setTimeout(() => {
+                dropdownMenu.classList.remove('show');
+            }, 500);
+        }
+
+        menuTrigger.addEventListener('mouseenter', showMenu);
+        dropdownMenu.addEventListener('mouseenter', showMenu);
+        menuTrigger.addEventListener('mouseleave', hideMenu);
+        dropdownMenu.addEventListener('mouseleave', hideMenu);
+
+        // 加载下拉菜单内容（不变）
+        function loadHtmlFiles() {
+            fetch('get_html_files.php')
+                .then(response => response.json())
+                .then(files => {
+                    dropdownMenu.innerHTML = '';
+                    files.forEach(file => {
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        const displayName = file.name.replace('.html', '');
+                        link.textContent = displayName;
+                        dropdownMenu.appendChild(link);
+                    });
+                })
+                .catch(error => console.error('Error loading HTML files:', error));
+        }
+
+        window.addEventListener('DOMContentLoaded', loadHtmlFiles);
+    </script>
+    
+    
+    <!--问答css-->
+    <script>
+  // 获取所有问题容器（更新类名为带-ysja后缀的版本）
+  const faqItems = document.querySelectorAll('.faq-item-ysja');
+
+  faqItems.forEach(item => {
+    // 选择带-ysja后缀的问题元素
+    const question = item.querySelector('.faq-question-ysja');
+    question.addEventListener('click', () => {
+      // 切换带-ysja后缀的激活类
+      item.classList.toggle('active-ysja');
+    });
+  });
+</script>
+
+<script>
+// 获取当前 HTML 文件名（去掉扩展名）
+let fileName = window.location.pathname.split("/").pop().replace(/\.html$/, "");
+
+// 为图片设置正确的路径（支持 jpg、jpeg、png、gif、webp 格式）
+function setImagePaths() {
+    const imageIds = ['spc文o@图片1', 'spc文o@图片2', 'spc文o@图片3', 'spc文o@图片4', 'spc文o@图片5'];
+    // 定义支持的图片格式（与 PHP 上传时的允许格式保持一致）
+    const allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    imageIds.forEach(id => {
+        const imgElement = document.getElementById(id);
+        if (imgElement) {
+            // 尝试拼接不同格式的路径，找到存在的图片
+            function getImageSrc() {
+                for (const ext of allowedExts) {
+                    // 动态拼接格式：../img/文件名/图片id.格式
+                    const src = `../img/${fileName}/${id}.${ext}`;
+                    // 临时创建图片对象检测路径是否有效
+                    const tempImg = new Image();
+                    tempImg.src = src;
+                    // 若图片能加载成功，返回该路径
+                    if (tempImg.complete) return src;
+                    // 处理异步加载的情况
+                    tempImg.onload = () => {
+                        imgElement.src = src;
+                    };
+                }
+                return ''; // 所有格式都不存在时返回空
+            }
+            
+            const validSrc = getImageSrc();
+            if (validSrc) {
+                imgElement.src = validSrc;
+            }
+            
+            // 错误处理：所有格式都加载失败时隐藏图片
+            imgElement.onerror = function() {
+                this.style.display = 'none';
+                console.log(`图片 ${id} 未找到或无法加载（已尝试格式：${allowedExts.join(', ')}）`);
+            };
+        }
+    });
+}
+
+// 请求 PHP 获取对应 txt 数据
+fetch("getData.php?file=" + encodeURIComponent(fileName))
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error(data.error);
+            return;
+        }
+
+        // 循环填充到对应的 div
+        for (let key in data) {
+            let el = document.getElementById(key);
+            if (el) {
+                // 将换行符转换为<br>标签，使用innerHTML显示换行
+                el.innerHTML = data[key].replace(/\n/g, '<br>');
+            }
+        }
+          // 设置图片路径
+        setImagePaths();
+    })
+    .catch(err => console.error("读取数据失败：", err));
+</script>
+  <script>
+        // 监听滚动事件，控制悬浮按钮的显示与隐藏
+        window.addEventListener('scroll', function() {
+            const floatingContact = document.querySelector('.floating-contact');
+            // 当滚动超过100px时显示悬浮按钮
+            if (window.scrollY > 100) {
+                floatingContact.classList.add('show');
+            } else {
+                floatingContact.classList.remove('show');
+            }
+        });
+    </script>
+  </body>
+</html>

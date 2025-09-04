@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建医美项目文档</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .page {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .page-content {
+            display: flex;
+            gap: 20px;
+        }
+        .page-left, .page-right {
+            flex: 1;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .file-input {
+            border: 1px dashed #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>创建医美项目文档</h1>
+    <form action="save.php" method="post" enctype="multipart/form-data">
+        <!-- 第1页 -->
+        <div class="page">
+            <div class="page-header">
+                <h2>第1页</h2>
+            </div>
+            <div class="page-content">
+                <div class="page-left">
+                    <div class="input-group">
+                        <label for="title">主标题</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="text1">主题下文本</label>
+                        <textarea id="text1" name="text1"></textarea>
+                    </div>
+                </div>
+                <div class="page-right">
+                    <div class="input-group">
+                        <label for="spc文o@图片1">标题图片</label>
+                        <input type="file" id="spc文o@图片1" name="spc文o@图片1" accept=".jpg" class="file-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第2页 -->
+        <div class="page">
+            <div class="page-header">
+                <h2>第2页</h2>
+            </div>
+            <div class="page-content">
+                <div class="page-left">
+                    <div class="input-group">
+                        <label for="text2">主文标题</label>
+                        <input type="text" id="text2" name="text2">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="text3">文案</label>
+                        <textarea id="text3" name="text3"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="text4">右边标题</label>
+                        <input type="text" id="text4" name="text4">
+                    </div>
+                </div>
+                <!--<div class="page-right">-->
+                <!--    <div class="input-group">-->
+                <!--        <label for="text4">右边标题</label>-->
+                <!--        <input type="text" id="text4" name="text4">-->
+                <!--    </div>-->
+                    
+                <!--    <div class="input-group">-->
+                <!--        <label for="text5">右边标题下小文本</label>-->
+                <!--        <textarea id="text5" name="text5"></textarea>-->
+                <!--    </div>-->
+                    
+                <!--    <div class="input-group">-->
+                <!--        <label for="spc文o@图片2">右边图片</label>-->
+                <!--        <input type="file" id="spc文o@图片2" name="spc文o@图片2" accept=".jpg" class="file-input">-->
+                <!--    </div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        
+       
+        
+        <button type="submit">保存全部</button>
+    </form>
+</body>
+</html>

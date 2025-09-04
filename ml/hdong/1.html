@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>显示内容</title>
+</head>
+<body>
+    <h1>内容展示</h1>
+    
+    <div>
+        <h2>标题</h2>
+        <div id="s0k标题"></div>
+    </div>
+    
+    <div>
+        <h2>简介</h2>
+        <div id="s0k简介"></div>
+    </div>
+    
+    <div>
+        <h2>主文案</h2>
+        <div id="s0k主文案"></div>
+    </div>
+    
+    <div>
+        <h2>备注</h2>
+        <div id="s0k备注"></div>
+    </div>
+    
+    <div>
+        <h2>图片</h2>
+        <img id="sj1-image" src="hdong/sj1.jpg" alt="上传的图片" onError="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cGF0aCBkPSJNMzYgMTk1QzM2IDE5NSA0NiAxODUgNDYgMTY1QzQ2IDE0NSA0NiAxMjUgNDYgMTA1QzQ2IDg1IDQ2IDY1IDQ2IDQ1QzM2IDQ1IDI2IDU1IDI2IDc1QzI2IDk1IDI2IDExNSAyNiAxMzVDMjYgMTU1IDI2IDE3NSAzNiAxOTVaIiBmaWxsPSIjZTBlMGUwIi8+PHBhdGggZD0iTTEyMCAxMDBDMTEwIDkwIDEwMCA4MCAxMDAgNzBDMTAwIDYwIDEwMCA1MCAxMDAgNDBMMTkwIDQwQzE5MCA1MCAxOTAgNjAgMTkwIDcwQzE5MCA4MCAxOTAgOTAgMTkwIDEwMEwxMjAgMTAwWiIgZmlsbD0iIzAwMDAwMCIvPjxwYXRoIGQ9Ik0xMjAgMTYwQzEwMCAxNjAgODAgMTQwIDgwIDEyMEM4MCAxMDAgODAgODAgODAgNjBDODAgNDAgMTAwIDIwIDEyMCAyMEMxNDAgMjAgMTYwIDQwIDE2MCA2MEMxNjAgODAgMTYwIDEwMCAxNjAgMTIwQzE2MCAxNDAgMTQwIDE2MCAxMjAgMTYwWiIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==';">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('hdong/sj1.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('无法加载文件');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // 定义所有可能的标签
+                    const tags = ['s0k标题', 's0k简介', 's0k主文案', 's0k备注'];
+                    // 当前正在处理的标签
+                    let currentTag = null;
+                    // 存储每个标签的内容
+                    const contentMap = {};
+                    
+                    // 初始化内容对象
+                    tags.forEach(tag => {
+                        contentMap[tag] = [];
+                    });
+                    
+                    // 按行分割文本
+                    const lines = data.split('\n');
+                    
+                    lines.forEach(line => {
+                        // 检查当前行是否是标签行
+                        let isTagLine = false;
+                        tags.forEach(tag => {
+                            if (line.startsWith(tag + '：')) {
+                                currentTag = tag;
+                                // 提取标签后的内容
+                                const content = line.substring((tag + '：').length).trim();
+                                if (content) {
+                                    contentMap[tag].push(content);
+                                }
+                                isTagLine = true;
+                            }
+                        });
+                        
+                        // 如果不是标签行且有当前活跃标签，则将内容添加到当前标签
+                        if (!isTagLine && currentTag) {
+                            contentMap[currentTag].push(line);
+                        }
+                    });
+                    
+                    // 将内容填充到对应元素，保留换行
+                    tags.forEach(tag => {
+                        const element = document.getElementById(tag);
+                        if (element) {
+                            // 使用innerHTML并将换行符替换为<br>标签以保留换行格式
+                            element.innerHTML = contentMap[tag].join('<br>');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('读取文件时出错:', error);
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = '无法加载内容: ' + error.message;
+                    document.body.prepend(errorDiv);
+                });
+        });
+    </script>
+</body>
+</html>

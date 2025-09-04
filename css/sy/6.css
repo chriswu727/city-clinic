@@ -1,0 +1,286 @@
+/*医生介绍*/
+  .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            padding: 15px 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+       
+       
+        
+        /* 主要内容区域 */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 主治医生样式 */
+        .primary-doctor {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .primary-doctor {
+                flex-direction: row;
+            }
+        }
+        
+        .doctor-photo {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        @media (min-width: 768px) {
+            .doctor-photo {
+                width: 33.333%;
+            }
+        }
+        
+        .doctor-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(15, 52, 96, 0.8), transparent);
+            padding: 10px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .photo-overlay span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .photo-overlay i {
+            color: #C8A951;
+            margin-right: 5px;
+        }
+        
+        .doctor-info {
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .doctor-info {
+                width: 66.666%;
+                padding: 20px;
+            }
+        }
+        
+        .doctor-name {
+            color: #0F3460;
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .doctor-title {
+            color: rgba(26, 26, 46, 0.8);
+            margin-bottom: 10px;
+        }
+        
+        .info-divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0 15px 0;
+        }
+        
+        .info-divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+        
+        .info-divider-highlight {
+            width: 40px;
+            height: 1px;
+            background-color: #C8A951;
+        }
+        
+        .section-title {
+            color: #0F3460;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            color: #C8A951;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .specialties {
+            margin-bottom: 20px;
+        }
+        
+        .specialty-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5px;
+        }
+        
+        @media (min-width: 576px) {
+            .specialty-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .specialty-item {
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+        }
+        
+        .specialty-item i {
+            color: #C8A951;
+            margin-right: 5px;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+        
+        .credentials-list {
+            list-style: none;
+        }
+        
+        .credential-item {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+        }
+        
+        .credential-item i {
+            color: #C8A951;
+            margin-right: 8px;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+        
+        .credential-details {
+            flex-grow: 1;
+        }
+        
+        .credential-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .credential-desc {
+            color: rgba(26, 26, 46, 0.7);
+            font-size: 13px;
+        }
+        
+        /* 团队成员样式 */
+        /*.team-members {*/
+        /*    display: grid;*/
+        /*    grid-template-columns: 1fr;*/
+        /*    gap: 15px;*/
+        /*}*/
+        
+        /*@media (min-width: 768px) {*/
+        /*    .team-members {*/
+        /*        grid-template-columns: 1fr 1fr;*/
+        /*    }*/
+        /*}*/
+        
+        /*.team-section {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*}*/
+        
+        /*.team-title {*/
+        /*    color: #0F3460;*/
+        /*    font-weight: 600;*/
+        /*    margin-bottom: 10px;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    font-size: 16px;*/
+        /*}*/
+        
+        /*.team-title:before {*/
+        /*    content: '';*/
+        /*    width: 24px;*/
+        /*    height: 1px;*/
+        /*    background-color: #C8A951;*/
+        /*    margin-right: 8px;*/
+        /*}*/
+        
+        /*.member-list {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    gap: 10px;*/
+        /*}*/
+        
+        /*.team-member {*/
+        /*    background-color: white;*/
+        /*    border-radius: 6px;*/
+        /*    padding: 10px;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    box-shadow: 0 2px 5px rgba(0,0,0,0.05);*/
+        /*    transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+        /*}*/
+        
+        /*.team-member:hover {*/
+        /*    transform: translateY(-3px);*/
+        /*    box-shadow: 0 5px 15px rgba(0,0,0,0.1);*/
+        /*}*/
+        
+        /*.member-photo {*/
+        /*    width: 64px;*/
+        /*    height: 64px;*/
+        /*    border-radius: 50%;*/
+        /*    overflow: hidden;*/
+        /*    margin-right: 12px;*/
+        /*    flex-shrink: 0;*/
+        /*}*/
+        
+        /*.doctors .member-photo {*/
+        /*    border: 1px solid rgba(200, 169, 81, 0.2);*/
+        /*}*/
+        
+        /*.nurses .member-photo {*/
+        /*    border: 1px solid rgba(15, 52, 96, 0.2);*/
+        /*}*/
+        
+        /*.member-photo img {*/
+        /*    width: 100%;*/
+        /*    height: 100%;*/
+        /*    object-fit: cover;*/
+        /*}*/
+        
+        /*.member-info h4 {*/
+        /*    color: #0F3460;*/
+        /*    font-weight: 600;*/
+        /*    margin-bottom: 3px;*/
+        /*    font-size: 15px;*/
+        /*}*/
+        
+        /*.member-info p {*/
+        /*    color: rgba(26, 26, 46, 0.7);*/
+        /*    font-size: 13px;*/
+        /*}*/

@@ -1,0 +1,70 @@
+无需数据库，导入即可使用，php版本8.0
+后台地址：http://xxt.soso007.cn/ht/ht1.php
+账号：1
+密码：1
+修改密码方法下方有
+
+首页顶部导航栏视频：img/sy/11.mp4
+		医师图片：img/sy/wxy.jpg
+        	所有log：	img/sy/logo.png
+	       所有二维码： img/sy/ewm.jpg
+		
+
+关于我们顶部导航栏照片：img/ml/关于我们.jpg
+		关于我们：	      img/gy/1.jpg
+		主医师介绍：   img/gy/2.jpg
+		专业团队：      img/gy/3-1.jpg到3-8.jpg
+		团队图片5张： img/gy/team1.jpg到team5.jpg
+
+
+医美项目顶部导航栏照片：img/ml/医美项目.jpg
+
+女性私密顶部导航栏照片：img/ml/女性私密.jpg
+
+医疗护理产品导航栏照片：img/ml/医疗护理.jpg
+
+最新活动顶部导航栏照片：img/ml/最新活动.jpg
+
+联系我们顶部导航栏照片：img/ml/联系我们.jpg
+		   微信二维码：/img/ml/wxewm.jpg
+
+
+
+文件夹含义：
+cj：创建医美项目
+cjnx：创建女性私密项目
+css：css样式
+ht：后台程序
+img：图片
+jsao：首页2页介绍
+ml：其他html界面
+
+修改：
+修改网站名称：<title>City Medical Prime & Aesthetics</title>
+修改商品品牌：ml/医疗护理产品.html，407行下面的</i>右边
+新增商品品牌：
+1、在ml/医疗护理产品.html中的470行复制：
+	 <a href="shang8/bu.html" class="category-card aspect-[4/5]">
+                <img src="../img/ml/4-4.jpg" alt="祛痘产品背景图，展示祛痘凝胶和洁面产品" class="w-full h-full object-cover">
+                <div class="category-text flex items-center justify-center">
+                    <i class="fa fa-medkit mr-3 text-xl"></i>面霜1
+                </div>
+            </a>
+2、修改复制内容中的"shang8/bu.html"中的shang8为shang9，修改</i>右边的品牌名称
+3、进入ml文件夹，复制shang8文件夹，粘贴并重命名为shang9文件夹
+4、进入ht/ht1.php，在158行复制：
+ 		<li class="nav-item" data-url="../ml/shang8/he.html">
+                    <i>📝</i>商品管理系统08
+                </li>
+5、修改复制内容中的shang8为shang9，商品管理系统08改商品管理系统09
+
+
+
+注意：
+商品管理中上传商品时商品名称不能重复
+医美项目中标题名称不能重复
+女性私密中标题名称不能重复
+
+
+修改后台密码：ht/login.php/第5-6行
+

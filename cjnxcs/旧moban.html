@@ -1,0 +1,72 @@
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vancouver Laser & Skin Care Centre</title>
+</head>
+<body>
+
+<div id="spc文o@文本1"></div>
+<div id="spc文o@文本2"></div>
+<div id="spc文o@文本3"></div>
+<div id="spc文o@文本4"></div>
+<div id="spc文o@文本5"></div>
+<div id="spc文o@文本6"></div>
+<div id="spc文o@文本7"></div>
+<div id="spc文o@文本8"></div>
+
+<!-- 修正了重复的id，每个图片应该有唯一的id -->
+<img src="" id="spc文o@图片1">
+<img src="" id="spc文o@图片2">
+<img src="" id="spc文o@图片3">
+
+<script>
+// 获取当前 HTML 文件名（去掉扩展名）
+let fileName = window.location.pathname.split("/").pop().replace(/\.html$/, "");
+
+// 为图片设置正确的路径
+function setImagePaths() {
+    // 获取所有以"spc文o@图片"开头的元素
+    const imageIds = ['spc文o@图片1', 'spc文o@图片2', 'spc文o@图片3'];
+    
+    imageIds.forEach(id => {
+        const imgElement = document.getElementById(id);
+        if (imgElement) {
+            // 设置图片路径：../img/文件名/图片id.jpg
+            imgElement.src = `../img/${fileName}/${id}.jpg`;
+            
+            // 可选：添加错误处理，如果图片加载失败则隐藏
+            imgElement.onerror = function() {
+                this.style.display = 'none';
+                console.log(`图片 ${id} 未找到或无法加载`);
+            };
+        }
+    });
+}
+
+// 请求 PHP 获取对应 txt 数据
+fetch("getData.php?file=" + encodeURIComponent(fileName))
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error(data.error);
+            return;
+        }
+
+        // 循环填充到对应的 div
+        for (let key in data) {
+            let el = document.getElementById(key);
+            if (el) {
+                el.textContent = data[key];
+            }
+        }
+        
+        // 设置图片路径
+        setImagePaths();
+    })
+    .catch(err => console.error("读取数据失败：", err));
+</script>
+
+</body>
+</html>
+    

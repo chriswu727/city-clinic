@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP页面对比展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        neutral: '#F5F7FA',
+                        dark: '#1D2129',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .iframe-container {
+                @apply relative w-full overflow-hidden transition-all duration-300 ease-in-out;
+            }
+            .panel-resizer {
+                @apply w-1 bg-gray-300 cursor-col-resize hover:bg-primary transition-colors duration-200 z-10;
+            }
+            .panel-header {
+                @apply bg-white px-4 py-2 border-b border-gray-200 flex items-center justify-between shadow-sm;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-md z-20">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-dark flex items-center">
+               
+                商品管理系统01
+            </h1>
+            <div class="flex items-center space-x-4">
+                <button id="refresh-btn" class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa fa-refresh mr-1"></i> 刷新
+                </button>
+                <!--<button id="swap-btn" class="flex items-center text-gray-600 hover:text-primary transition-colors">-->
+                <!--    <i class="fa fa-exchange mr-1"></i> 交换-->
+                <!--</button>-->
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 - 分栏展示 -->
+    <main class="flex-1 flex overflow-hidden">
+        <!-- 左侧面板 -->
+        <div id="left-panel" class="flex-1 flex flex-col overflow-hidden border-r border-gray-200">
+            <div class="panel-header">
+                <h2 class="font-medium text-gray-800">上传</h2>
+                <div class="flex items-center">
+                    <span id="left-loading" class="text-primary text-sm hidden">
+                        <i class="fa fa-spinner fa-spin mr-1"></i>加载中...
+                    </span>
+                </div>
+            </div>
+            <div class="iframe-container flex-1">
+                <iframe id="left-iframe" src="schang.php" class="w-full h-full border-0" 
+                    onload="document.getElementById('left-loading').classList.add('hidden')"
+                    onloadstart="document.getElementById('left-loading').classList.remove('hidden')">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- 分隔条 -->
+        <div id="resizer" class="panel-resizer h-full"></div>
+
+        <!-- 右侧面板 -->
+        <div id="right-panel" class="flex-1 flex flex-col overflow-hidden">
+            <div class="panel-header">
+                <h2 class="font-medium text-gray-800">删除</h2>
+                <div class="flex items-center">
+                    <span id="right-loading" class="text-primary text-sm hidden">
+                        <i class="fa fa-spinner fa-spin mr-1"></i>加载中...
+                    </span>
+                </div>
+            </div>
+            <div class="iframe-container flex-1">
+                <iframe id="right-iframe" src="x.php" class="w-full h-full border-0"
+                    onload="document.getElementById('right-loading').classList.add('hidden')"
+                    onloadstart="document.getElementById('right-loading').classList.remove('hidden')">
+                </iframe>
+            </div>
+        </div>
+    </main>
+
+   
+
+    <script>
+        // 初始化面板大小
+        const leftPanel = document.getElementById('left-panel');
+        const rightPanel = document.getElementById('right-panel');
+        const resizer = document.getElementById('resizer');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const swapBtn = document.getElementById('swap-btn');
+        const leftIframe = document.getElementById('left-iframe');
+        const rightIframe = document.getElementById('right-iframe');
+
+        // 设置初始大小
+        leftPanel.style.width = '50%';
+        rightPanel.style.width = '50%';
+
+        // 拖动分隔条调整面板大小
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = 'col-resize';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const container = document.querySelector('main');
+            const rect = container.getBoundingClientRect();
+            const totalWidth = rect.width;
+            const mouseX = e.clientX - rect.left;
+            
+            // 限制最小宽度为20%
+            if (mouseX / totalWidth > 0.2 && mouseX / totalWidth < 0.8) {
+                leftPanel.style.width = `${mouseX / totalWidth * 100}%`;
+                rightPanel.style.width = `${100 - (mouseX / totalWidth * 100)}%`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+            document.body.style.cursor = '';
+        });
+
+        // 刷新按钮功能
+        refreshBtn.addEventListener('click', () => {
+            // 显示加载状态
+            document.getElementById('left-loading').classList.remove('hidden');
+            document.getElementById('right-loading').classList.remove('hidden');
+            
+            // 刷新iframe
+            leftIframe.src = leftIframe.src;
+            rightIframe.src = rightIframe.src;
+        });
+
+        // 交换按钮功能
+        swapBtn.addEventListener('click', () => {
+            // 显示加载状态
+            document.getElementById('left-loading').classList.remove('hidden');
+            document.getElementById('right-loading').classList.remove('hidden');
+            
+            // 交换src属性
+            const tempSrc = leftIframe.src;
+            leftIframe.src = rightIframe.src;
+            rightIframe.src = tempSrc;
+            
+            // 交换标题
+            const leftTitle = document.querySelector('#left-panel h2').textContent;
+            const rightTitle = document.querySelector('#right-panel h2').textContent;
+            document.querySelector('#left-panel h2').textContent = rightTitle;
+            document.querySelector('#right-panel h2').textContent = leftTitle;
+        });
+
+        // 响应式处理 - 小屏幕下堆叠显示
+        function handleResize() {
+            if (window.innerWidth < 768) {
+                leftPanel.style.width = '100%';
+                rightPanel.style.width = '100%';
+                document.querySelector('main').style.flexDirection = 'column';
+                resizer.style.display = 'none';
+            } else {
+                document.querySelector('main').style.flexDirection = 'row';
+                resizer.style.display = 'block';
+            }
+        }
+
+        // 初始调用一次
+        handleResize();
+        // 监听窗口大小变化
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>

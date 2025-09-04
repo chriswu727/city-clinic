@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>显示内容</title>
+</head>
+<body>
+    <h1>内容展示</h1>
+    
+    <!-- s1p内容区域 -->
+    <div>
+        <h2>标题</h2>
+        <div id="s1p标题"></div>
+    </div>
+    
+    <div>
+        <h2>简介</h2>
+        <div id="s1p简介"></div>
+    </div>
+    
+    <div>
+        <h2>主文案</h2>
+        <div id="s1p主文案"></div>
+    </div>
+    
+    <div>
+        <h2>链接</h2>
+        <a id="s1p链接" href="">访问链接</a>
+    </div>
+    
+    <!-- s2p内容区域 -->
+    <div>
+        <h2>标题</h2>
+        <div id="s2p标题"></div>
+    </div>
+    
+    <div>
+        <h2>简介</h2>
+        <div id="s2p简介"></div>
+    </div>
+    
+    <div>
+        <h2>主文案</h2>
+        <div id="s2p主文案"></div>
+    </div>
+    
+    <div>
+        <h2>链接</h2>
+        <a id="s2p链接" href="">访问链接</a>
+    </div>
+  
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载并处理文件的函数
+            function loadAndProcessContent(fileLocation, tagList, linkIdentifier) {
+                fetch(fileLocation)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`无法加载文件: ${fileLocation}`);
+                        }
+                        return response.text();
+                    })
+                    .then(fileContent => {
+                        // 当前处理的标签
+                        let activeTag = null;
+                        // 存储标签内容的映射
+                        const contentStorage = {};
+                        
+                        // 初始化内容存储对象
+                        tagList.forEach(tag => {
+                            contentStorage[tag] = [];
+                        });
+                        
+                        // 按行分割文本内容
+                        const textLines = fileContent.split('\n');
+                        
+                        textLines.forEach(lineContent => {
+                            // 检查是否为标签行
+                            let isTagLine = false;
+                            tagList.forEach(tag => {
+                                if (lineContent.startsWith(tag + '：')) {
+                                    activeTag = tag;
+                                    // 提取标签后的内容
+                                    const extractedContent = lineContent.substring((tag + '：').length).trim();
+                                    if (extractedContent) {
+                                        contentStorage[tag].push(extractedContent);
+                                    }
+                                    isTagLine = true;
+                                }
+                            });
+                            
+                            // 非标签行且有活跃标签时，添加内容到当前标签
+                            if (!isTagLine && activeTag) {
+                                contentStorage[activeTag].push(lineContent);
+                            }
+                        });
+                        
+                        // 处理普通内容标签
+                        tagList.forEach(tag => {
+                            // 跳过备注标签，后续单独处理
+                            if (tag.includes('备注')) return;
+                            
+                            const targetElement = document.getElementById(tag);
+                            if (targetElement) {
+                                targetElement.innerHTML = contentStorage[tag].join('<br>');
+                            }
+                        });
+                        
+                        // 处理备注标签，设置为链接的href
+                        const noteTag = tagList.find(tag => tag.includes('备注'));
+                        if (noteTag && linkIdentifier) {
+                            const linkElement = document.getElementById(linkIdentifier);
+                            if (linkElement) {
+                                // 备注内容作为链接地址
+                                const urlLink = contentStorage[noteTag].join('').trim();
+                                linkElement.href = urlLink;
+                                
+                                // 链接为空时显示提示
+                                if (!urlLink) {
+                                    linkElement.textContent = '无链接';
+                                    linkElement.style.color = 'red';
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('读取文件时出错:', error);
+                        const errorNotification = document.createElement('div');
+                        errorNotification.textContent = '无法加载内容: ' + error.message;
+                        document.body.prepend(errorNotification);
+                    });
+            }
+            
+            // 加载s1p数据（来自sj1.txt）
+            const s1pTagList = ['s1p标题', 's1p简介', 's1p主文案', 's1p备注'];
+            loadAndProcessContent('sj1.txt', s1pTagList, 's1p链接');
+            
+            // 加载s2p数据（来自sj2.txt）
+            const s2pTagList = ['s2p标题', 's2p简介', 's2p主文案', 's2p备注'];
+            loadAndProcessContent('sj2.txt', s2pTagList, 's2p链接');
+        });
+    </script>
+</body>
+</html>
+    

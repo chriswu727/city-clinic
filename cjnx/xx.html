@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>介</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta name='viewport' content='width=device-width, initial-scale=0.45'>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+            .modal-backdrop {
+                backdrop-filter: blur(3px);
+            }
+        }
+        
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+        }
+    </style>
+   
+</head>
+<body>
+    <div class="container mx-auto max-w-7xl">
+        <!-- 页面标题 -->
+        <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-6 md:mb-8 text-center">
+            删除女性项目
+        </h1>
+        
+        <!-- 加载状态 -->
+        <div id="loading" class="flex justify-center items-center min-h-[300px]">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        </div>
+        
+        <!-- 错误信息 -->
+        <div id="error" class="hidden text-center text-red-500 py-10"></div>
+        
+        <!-- 成功信息 -->
+        <div id="success" class="hidden text-center text-green-500 py-10"></div>
+        
+        <!-- 文件列表容器 - 一行3个 -->
+        <div id="fileContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <!-- 内容将通过JavaScript动态填充 -->
+        </div>
+    </div>
+    
+    <!-- 确认删除弹窗 -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 transform transition-all">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">确认删除</h3>
+            <p class="text-gray-600 mb-6" id="deleteFileName">你确定要删除这个文件吗？</p>
+            <div class="flex justify-end gap-4">
+                <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                    取消
+                </button>
+                <button id="confirmDelete" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                    确认删除
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 存储当前要删除的文件路径
+        let currentFileToDelete = null;
+        
+        // 页面加载完成后获取文件列表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取文件列表
+            fetchFiles();
+            
+            // 取消删除按钮事件
+            document.getElementById('cancelDelete').addEventListener('click', function() {
+                document.getElementById('deleteModal').classList.add('hidden');
+                currentFileToDelete = null;
+            });
+            
+            // 确认删除按钮事件
+            document.getElementById('confirmDelete').addEventListener('click', function() {
+                if (currentFileToDelete) {
+                    deleteFile(currentFileToDelete);
+                }
+            });
+        });
+        
+        // 获取文件列表
+        function fetchFiles() {
+            // 显示加载状态
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('success').classList.add('hidden');
+            
+            // 调用PHP脚本获取文件列表
+            fetch('get_html_files_nxxm.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常');
+                    }
+                    return response.json();
+                })
+                .then(files => {
+                    const fileContainer = document.getElementById('fileContainer');
+                    const loading = document.getElementById('loading');
+                    const error = document.getElementById('error');
+                    
+                    // 隐藏加载状态
+                    loading.classList.add('hidden');
+                    
+                    // 清空容器
+                    fileContainer.innerHTML = '';
+                    
+                    if (files.length === 0) {
+                        // 没有找到文件
+                        error.classList.remove('hidden');
+                        error.textContent = '未找到任何HTML文件';
+                        return;
+                    }
+                    
+                    // 生成文件链接卡片
+                    files.forEach(file => {
+                        // 创建卡片容器
+                        const cardContainer = document.createElement('div');
+                        cardContainer.className = 'relative';
+                        
+                        // 创建链接
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        link.target = "_blank";
+                        link.className = "block";
+                        
+                        // 创建卡片元素
+                        const card = document.createElement('div');
+                        card.className = 'bg-white rounded-lg p-5 shadow card-hover border border-gray-100 h-full';
+                        
+                        // 卡片内容
+                        card.innerHTML = `
+                            <h3 class="font-medium text-gray-800 py-4 file-name text-left">${file.name}</h3>
+                        `;
+                        
+                        // 创建删除按钮
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors';
+                        deleteBtn.innerHTML = '<i class="fa fa-trash-o" aria-hidden="true"></i> 删除';
+                        deleteBtn.onclick = function(e) {
+                            // 阻止事件冒泡，避免触发链接跳转
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            // 显示确认弹窗
+                            currentFileToDelete = file;
+                            document.getElementById('deleteFileName').textContent = `你确定要删除"${file.name}"吗？`;
+                            document.getElementById('deleteModal').classList.remove('hidden');
+                        };
+                        
+                        // 组装元素
+                        link.appendChild(card);
+                        cardContainer.appendChild(link);
+                        cardContainer.appendChild(deleteBtn);
+                        fileContainer.appendChild(cardContainer);
+                    });
+                })
+                .catch(error => {
+                    console.error('获取文件列表失败:', error);
+                    const loading = document.getElementById('loading');
+                    const errorDiv = document.getElementById('error');
+                    
+                    loading.classList.add('hidden');
+                    errorDiv.classList.remove('hidden');
+                    errorDiv.textContent = '获取文件列表失败，请稍后重试';
+                });
+        }
+        
+        // 删除文件
+        function deleteFile(file) {
+            fetch('delete_file.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `filename=${encodeURIComponent(file.name + '.html')}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('删除失败');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // 隐藏弹窗
+                    document.getElementById('deleteModal').classList.add('hidden');
+                    
+                    // 显示成功消息
+                    const successDiv = document.getElementById('success');
+                    successDiv.textContent = `文件"${file.name}"已成功删除`;
+                    successDiv.classList.remove('hidden');
+                    
+                    // 重新加载文件列表
+                    setTimeout(fetchFiles, 1500);
+                } else {
+                    throw new Error(data.message || '删除失败');
+                }
+            })
+            .catch(error => {
+                console.error('删除文件失败:', error);
+                alert('删除失败: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

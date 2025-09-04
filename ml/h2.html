@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>活动2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sy/5.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease-in-out forwards;
+            }
+            .animate-slide-up {
+                animation: slideUp 0.8s ease-out forwards;
+            }
+            .animate-slide-up-delay {
+                animation: slideUp 0.8s ease-out 0.3s forwards;
+                opacity: 0;
+            }
+             
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+             overflow-x: hidden;
+        }
+        
+        /* 顶部横条 */
+        .top-bar {
+            background-color: #d4b679;
+            color: black;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 顶部导航区 */
+        .navbar {
+             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            background-color: transparent;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 1px 2px rgba(0, 10, 0, 0.1);
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.2));
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+             transform: scale(1.3) translateY(10px);
+        }
+
+        .nav-links {
+            width: auto;
+            display: flex;
+            gap: clamp(15px, 5vw, 40px);
+            position: relative;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: clamp(14px, 2vw, 15px);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        /* 下拉区域 */
+        .dropdown {
+            position: absolute;
+            top: 58px;
+            left: -300px;
+            width: 1000px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 100;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.4s ease;
+            pointer-events: none;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            max-height: 900px;
+            pointer-events: auto;
+        }
+
+        .dropdown a {
+            display: inline-block;
+            width: calc(30% - 10px);
+            margin: 5px;
+            text-align: left;
+            color: #333333;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .dropdown a:hover {
+            color: #d4b679;
+        }
+
+       
+
+        /* 响应式调整 - 手机设备 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                top: 30px;
+            }
+            .logo img {
+                height: 35px;
+            }
+            .dropdown {
+                width: 90vw;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 45px;
+            }
+            .dropdown a {
+                width: calc(50% - 10px);
+            }
+        }
+
+        /* 极小屏幕优化 */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .logo img {
+                height: 30px;
+            }
+            .dropdown a {
+                width: 100%;
+            }
+        }
+
+        /* 背景图容器样式 */
+        .hero {
+            position: relative; 
+            z-index: 50;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+        /* 背景图样式 */
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* 悬浮联系我们文字 */
+        .contact-vv {
+            position: absolute;
+            top: 70%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+        }
+        .contact-oo {
+            position: absolute;
+            top: 60%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 90px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 响应式调整悬浮文字 */
+        @media (max-width: 768px) {
+            .contact-oo {
+                font-size: 40px;
+                top: 55%;
+                left: 50%;
+            }
+            .contact-vv {
+                font-size: 16px;
+                top: 70%;
+                left: 50%;
+                text-align: center;
+                width: 80%;
+            }
+        }
+
+        .right-text-gsjs {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+        @media (max-width: 900px) {
+            .container-gsjs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .left-box-gsjs, .right-text-gsjs {
+                max-width: 100%;
+            }
+        }
+
+        /* 底部导航栏 */
+        .containerii {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px;
+            box-sizing: border-box;
+            gap: 20px;
+        }
+        .footer-nav-wrapper {
+            background: linear-gradient(to bottom, #ffffff, #F5F0D9);
+            width: 100%;
+            margin: 0;
+        }
+        .dividertty {
+            width: 1px;
+            background-color: #ccc;
+        }
+        .left-col, .middle-col, .right-col {
+            flex: 1;
+            padding: 0 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin-top: 20px;
+        }
+        /* 响应式调整底部容器 */
+        @media (max-width: 768px) {
+            .containerii {
+                flex-direction: column;
+            }
+            .dividertty {
+                width: 100%;
+                height: 1px;
+                margin: 20px 0;
+            }
+        }
+        
+        /* 新增：图文布局容器（核心修改） */
+        .content-with-image {
+            display: flex;
+            gap: 2rem; /* 图文间距 */
+            align-items: flex-start; /* 高图顶部对齐 */
+        }
+        /* 左侧图片样式（适配高图） */
+        .left-image {
+            flex: 0 0 350px; /* 固定图片宽度，不缩放 */
+        }
+        .left-image img {
+            width: 100%;
+            height: 500px; /* 保持高图比例，不拉伸 */
+            object-fit: cover;
+        }
+        /* 右侧内容区域 */
+        .right-content {
+            flex: 1; /* 内容占剩余宽度 */
+        }
+        /* 移动端响应：图文堆叠 */
+        @media (max-width: 992px) {
+            .content-with-image {
+                flex-direction: column; /* 垂直排列 */
+            }
+            .left-image {
+                flex: 0 0 auto; /* 取消固定宽度 */
+                width: 100%; /* 图片占满宽度 */
+            }
+        }
+        
+        /* 滚动时显示的悬浮联系按钮 */
+        .floating-contact {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .floating-contact.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-contact a {
+            display: inline-block;
+            background-color: #0F3460;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .floating-contact a:hover {
+            background-color: #1a4a8a;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式调整悬浮按钮 */
+        @media (max-width: 768px) {
+            .floating-contact {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .floating-contact a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+          .xz{
+             font-size: 12px;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- 顶部导航（不变） -->
+   <div class="navbar">
+    <div class="logo">
+        <a href="../index.html"><img src="../img/sy/logo.png" alt="LOGO"></a>
+    </div>
+    <div class="nav-links">
+         <a href="关于我们.html">关于我们<br><span class="xz">About Us</span></a>
+
+        <!-- 医美项目菜单 -->
+        <div class="menu-item">
+            <a href="医美项目.html" id="menu-trigger">医美项目<br><span class="xz">Medical aesthetic projects</span></a>
+            <div class="dropdown" id="dropdown-menu">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>    
+        </div>
+
+         <div class="menu-item">
+    <a href="女性私密.html" id="menu-trigger-nxxm">女性私密<br><span class="xz">feminine intimate</span></a>
+    <div class="dropdown" id="dropdown-menu-nxxm">
+        <!-- 动态内容将通过PHP/AJAX加载 -->
+    </div>
+</div>
+        <a href="医疗护理产品.html">医疗护理产品<br><span class="xz">Medical care products</span></a>
+        <a href="最新活动.html">最新活动<br><span class="xz">Latest Activities</span></a>
+        <a href="联系我们.html">联系我们<br><span class="xz">Contact Us</span></a>
+    </div>
+</div>
+ <!-- 滚动时显示的悬浮联系按钮 -->
+    <div class="floating-contact">
+        <a href="联系我们.html">联系我们</a>
+    </div>
+    <!-- 图片背景（替换原视频背景）- 结构不变 -->
+    <div class="hero" >
+        <img src="hdong/sj2.jpg" alt="诊所背景图">
+        <p class="contact-oo" id="s0k标题">极致放松水疗</p>
+        <p class="contact-vv" id="s0k简介">即日起至本月底，加入会员即可享受多重豪华礼遇与专属折扣</p>
+    </div>
+    
+    
+     <div class="max-w-7xl mx-auto bg-white shadow-2xl overflow-hidden">
+        <!-- 优惠详情区域（核心修改：图文布局） -->
+        <div class="container mx-auto px-6 md:px-12 py-16 md:py-24">
+            <!-- 新增：Flex 图文容器 -->
+            <div class="content-with-image">
+                <!-- 左侧：目标图片 -->
+                <div class="left-image animate-slide-up">
+                    <img src="hdong/sj2.jpg" alt="长图" >
+                </div>
+                <!-- 右侧：文字内容 -->
+                <div class="right-content max-w-3xl">
+                    <!-- 活动标题 -->
+                    <div class="text-center mb-12 animate-slide-up">
+                        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-neutral-900 mb-4" id="s0k标题">
+                            极致放松水疗
+                        </h2>
+                        <div class="w-20 h-1 bg-secondary mx-auto"></div>
+                    </div>
+                    
+                    <!-- 详细文案 -->
+                    <div class="space-y-6 text-lg text-neutral-700 leading-relaxed animate-slide-up-delay">
+                        <p id="s0k主文案">
+                            本年度最具价值的会员招募活动现已开启，我们为新加入的尊贵会员准备了前所未有的豪华礼遇。无论是精选产品的专属折扣，还是限量版定制服务，都将为您带来无与伦比的高端体验。
+                        </p>
+                    
+                        <div class="bg-neutral-100 p-6 rounded-lg border-l-4 border-secondary mt-10">
+                            <p class="text-neutral-800 font-medium">
+                                <i class="fa fa-clock-o text-secondary mr-2" ></i>
+                                <b id="s0k备注"></b>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 行动号召按钮 -->
+                    <div class="text-center mt-16 animate-slide-up-delay" style="animation-delay: 0.6s">
+                        <a href="联系我们.html" class="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-4 rounded-md transform hover:-translate-y-1 transition-all duration-300 shadow-xl">
+                            立即联系我们了解 <i class="fa fa-star ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!--底部导航栏-->
+<div class="footer-nav-wrapper">
+    <div class="containerii">
+        <!-- 左侧区域 -->
+        <div class="left-col">
+            <div class="logo">
+                <img src="../img/sy/logo.png" alt="Logo">
+               <div class="title">City Medical Prime & Aesthetics</div>
+            </div>
+            <div class="address">
+                <p>Vancouver 溫哥華</p>
+                <p>Neelu Brachua Center </p>
+                <p>#305-550 West Broadway </p>
+                <p>#305-550 West Broadway </p>
+                <p>V5Z 1E9</p>
+            </div>
+            <div class="time">
+                <p>週一     9:30 AM- 5:00 PM</p>
+                <p>週二     9:30 AM- 5:00 PM</p>
+                <p>週三     9:30 AM- 5:00 PM</p>
+                <p>週四     9:30 AM- 5:00 PM</p>
+                <p>週五     9:30 AM- 5:00 PM</p>
+                <p>週六     预约</p>
+                <p>週日     预约</p>
+            </div>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 中间区域 -->
+        <div class="middle-col">
+            <div class="contact">
+                <p>電話：604-278-5010</p>
+                <p>傳真：604-278-5197</p>
+                <p>電郵：info@vandoctors.com</p>
+                <br>
+                <p>Richmond 列治文</p>
+                <p>Richmond Medical Center </p>
+                <p>#630-6388 No.3 Rd. </p>
+                <p>Richmond, BC, Canada</p>
+                <p>V6Y 0L4</p>
+            </div>
+           <p> <a href="联系我们.html" ><button class="ccssbutt">联系我们</button></a></p>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 右侧区域 -->
+        <div class="right-col">
+            <div class="qr-code">
+              <img src="../img/sy/ewm.jpg" alt="QR Code" style="display: block; margin: 0 auto;">
+               <br><!--换行标注-->
+                <p>成為“城市卓越醫療&醫美中心”至尊會員</p>
+                 <br><!--换行标注-->
+                <p>享受360度無微不致的醫療關懷</p>
+                 <br><!--换行标注-->
+               <p> 請電郵 ​member@vandoctors.com</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+   
+
+    <!-- 交互脚本（不变） -->
+    <script>
+        const menuTrigger = document.getElementById('menu-trigger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        let hideTimeout;
+
+        function showMenu() {
+            clearTimeout(hideTimeout);
+            dropdownMenu.classList.add('show');
+        }
+
+        function hideMenu() {
+            hideTimeout = setTimeout(() => {
+                dropdownMenu.classList.remove('show');
+            }, 500);
+        }
+
+        menuTrigger.addEventListener('mouseenter', showMenu);
+        dropdownMenu.addEventListener('mouseenter', showMenu);
+        menuTrigger.addEventListener('mouseleave', hideMenu);
+        dropdownMenu.addEventListener('mouseleave', hideMenu);
+
+        // 加载下拉菜单内容（不变）
+        function loadHtmlFiles() {
+            fetch('get_html_files.php')
+                .then(response => response.json())
+                .then(files => {
+                    dropdownMenu.innerHTML = '';
+                    files.forEach(file => {
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        const displayName = file.name.replace('.html', '');
+                        link.textContent = displayName;
+                        dropdownMenu.appendChild(link);
+                    });
+                })
+                .catch(error => console.error('Error loading HTML files:', error));
+        }
+
+        window.addEventListener('DOMContentLoaded', loadHtmlFiles);
+    </script>
+    <script>
+    // ---------------------- 新增：女性私密菜单逻辑 ----------------------
+const menuTriggerNxxm = document.getElementById('menu-trigger-nxxm');
+const dropdownMenuNxxm = document.getElementById('dropdown-menu-nxxm');
+let hideTimeoutNxxm;
+
+// 显示女性私密下拉菜单
+function showMenuNxxm() {
+    clearTimeout(hideTimeoutNxxm);
+    dropdownMenuNxxm.classList.add('show');
+}
+
+// 隐藏女性私密下拉菜单
+function hideMenuNxxm() {
+    hideTimeoutNxxm = setTimeout(() => {
+        dropdownMenuNxxm.classList.remove('show');
+    }, 100); // 与医美项目保持一致的延迟隐藏时间
+}
+
+// 绑定鼠标进出事件
+menuTriggerNxxm.addEventListener('mouseenter', showMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseenter', showMenuNxxm);
+menuTriggerNxxm.addEventListener('mouseleave', hideMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseleave', hideMenuNxxm);
+
+// 加载女性私密的HTML文件列表（调用指定PHP：get_html_files_nxxm.php）
+function loadHtmlFilesNxxm() {
+    fetch('get_html_files_nxxm.php') // 这里使用指定的PHP文件
+        .then(response => response.json())
+        .then(files => {
+            dropdownMenuNxxm.innerHTML = '';
+            files.forEach(file => {
+                const link = document.createElement('a');
+                link.href = file.path;
+                const displayName = file.name.replace('.html', ''); // 去除.html后缀
+                link.textContent = displayName;
+                dropdownMenuNxxm.appendChild(link);
+            });
+        })
+        .catch(error => console.error('Error loading 女性私密 HTML files:', error));
+}
+
+// 页面加载时执行女性私密文件加载
+window.addEventListener('DOMContentLoaded', loadHtmlFilesNxxm);
+</script>
+
+
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('hdong/sj2.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('无法加载文件');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const tags = ['s0k标题', 's0k简介', 's0k主文案', 's0k备注'];
+                    let currentTag = null;
+                    const contentMap = {};
+                    
+                    tags.forEach(tag => {
+                        contentMap[tag] = [];
+                    });
+                    
+                    const lines = data.split('\n');
+                    
+                    lines.forEach(line => {
+                        let isTagLine = false;
+                        tags.forEach(tag => {
+                            if (line.startsWith(tag + '：')) {
+                                currentTag = tag;
+                                const content = line.substring((tag + '：').length).trim();
+                                if (content) {
+                                    contentMap[tag].push(content);
+                                }
+                                isTagLine = true;
+                            }
+                        });
+                        
+                        if (!isTagLine && currentTag) {
+                            contentMap[currentTag].push(line);
+                        }
+                    });
+                    
+                    // 遍历所有标签，对每个标签找到所有匹配的元素并更新内容
+                    tags.forEach(tag => {
+                        // 获取所有具有该ID的元素（querySelectorAll支持通过ID选择多个元素）
+                        const elements = document.querySelectorAll(`#${tag}`);
+                        elements.forEach(element => {
+                            element.innerHTML = contentMap[tag].join('<br>');
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('读取文件时出错:', error);
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = '无法加载内容: ' + error.message;
+                    document.body.prepend(errorDiv);
+                });
+        });
+    </script>
+    
+      <script>
+        // 监听滚动事件，控制悬浮按钮的显示与隐藏
+        window.addEventListener('scroll', function() {
+            const floatingContact = document.querySelector('.floating-contact');
+            // 当滚动超过100px时显示悬浮按钮
+            if (window.scrollY > 100) {
+                floatingContact.classList.add('show');
+            } else {
+                floatingContact.classList.remove('show');
+            }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>城市醫療｜診所簡介</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=0.45'>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/sy/5.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460',
+                        secondary: '#C8A96A',
+                        neutral: '#F5F5F5',
+                        dark: '#1A1A1A',
+                       
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(15, 52, 96, 0.9), rgba(15, 52, 96, 0.7));
+            }
+            
+            
+               .category-card {
+                @apply relative rounded-2xl overflow-hidden transition-all duration-300 ease-in-out cursor-pointer;
+            }
+            .category-card:hover {
+                @apply transform scale-[1.02] shadow-xl;
+            }
+            .category-text {
+                /* 白色文字带黑色阴影，确保在任何背景上都清晰可见 */
+                @apply absolute bottom-0 left-0 right-0 p-8 text-white text-3xl font-bold 
+                       transition-all duration-300 text-center
+                       drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)];
+            }
+        }
+    </style>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F7;
+            color: #1A1A2E;
+        }
+        
+        
+
+        /* 顶部横条 */
+        .top-bar {
+            background-color: #d4b679;
+            color: black;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 顶部导航区 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background-color: transparent;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-bottom: 1px solid rgba(255, 255, 255, 1); /* 半透明白线 */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* 新增：确保padding不会增加总宽度 */
+        }
+
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+        }
+
+        .nav-links {
+            width: auto; /* 修改：去掉固定30%宽度 */
+            display: flex;
+            gap: clamp(15px, 5vw, 40px); /* 关键：动态间距，小屏幕近，大屏幕远 */
+            position: relative;
+            align-items: center; /* 确保链接垂直居中 */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: clamp(14px, 2vw, 15px); /* 动态字体大小 */
+            position: relative;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        /* 下拉区域 */
+        .dropdown {
+            position: absolute;
+            top: 58px;
+            left: -300px;
+            width: 1000px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 100;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.4s ease;
+            pointer-events: none;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            max-height: 900px;
+            pointer-events: auto;
+        }
+
+        .dropdown a {
+            display: inline-block;
+            width: calc(30% - 10px);
+            margin: 5px;
+            text-align: left;
+            color: #333333;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .dropdown a:hover {
+            color: #d4b679;
+        }
+
+        /* 响应式调整 - 平板设备 */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 20px 30px;
+            }
+            .dropdown {
+                width: 800px;
+                left: -200px;
+            }
+        }
+
+        /* 响应式调整 - 手机设备 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                top: 30px; /* 调整与顶部横条的距离 */
+            }
+            .logo img {
+                height: 35px; /* 缩小logo */
+            }
+            .dropdown {
+                width: 90vw; /* 适应屏幕宽度 */
+                left: 50%;
+                transform: translateX(-50%); /* 居中显示 */
+                top: 45px; /* 调整距离 */
+            }
+            .dropdown a {
+                width: calc(50% - 10px); /* 手机端一行显示两个 */
+            }
+        }
+
+        /* 极小屏幕优化 */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px 15px;
+            }
+            .nav-links {
+                gap: 10px; /* 进一步缩小间距 */
+            }
+            .logo img {
+                height: 30px;
+            }
+            .dropdown a {
+                width: 100%; /* 极小屏幕一行显示一个 */
+            }
+        }
+
+        /* 关键修改：背景图容器样式 */
+        .hero {
+            position: relative; 
+            z-index: 50;
+            width: 100%;
+            height: 50vh; /* 1. 让容器占满屏幕高度 */
+            overflow: hidden; /* 2. 隐藏超出容器的图片部分 */
+        }
+        /* 关键修改：背景图样式 */
+        .hero img {
+            position: absolute; /* 3. 绝对定位，脱离文档流便于控制 */
+            top: 0;
+            left: 0;
+            width: 100%; /* 4. 宽度铺满屏幕 */
+            height: 100%; /* 5. 高度铺满容器 */
+            object-fit: cover; /* 6. 保持图片比例，同时覆盖整个容器（裁剪多余部分） */
+            display: block;
+        }
+        
+        /* 悬浮联系我们文字 */
+        .contact-vv {
+            position: absolute;
+            top: 70%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+        }
+        .contact-oo {
+            position: absolute;
+            top: 60%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 90px;
+            z-index: 60;
+            font-weight: 100;
+            text-decoration: none;
+        }
+
+        /* 响应式调整悬浮文字（避免小屏幕文字过大/位置错乱） */
+        @media (max-width: 768px) {
+            .contact-oo {
+                font-size: 40px; /* 缩小大标题 */
+                top: 55%;
+                left: 50%; /* 居中显示 */
+            }
+            .contact-vv {
+                font-size: 16px; /* 缩小副标题 */
+                top: 70%;
+                left: 50%; /* 居中显示 */
+                text-align: center;
+                width: 80%; /* 限制宽度，避免换行异常 */
+            }
+        }
+
+        .right-text-gsjs {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+        @media (max-width: 900px) {
+            .container-gsjs {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .left-box-gsjs, .right-text-gsjs {
+                max-width: 100%;
+            }
+        }
+
+        /* 底部导航栏 */
+.containerii {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    box-sizing: border-box;
+    gap: 20px;
+ 
+}
+.footer-nav-wrapper {
+  
+      background: linear-gradient(to bottom, #ffffff, #F5F0D9	);
+    width: 100%;
+    margin: 0;
+}
+        .dividertty {
+            width: 1px;
+            background-color: #ccc;
+        }
+        .left-col, .middle-col, .right-col {
+            flex: 1;
+            padding: 0 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin-top: 20px;
+        }
+        /* 响应式调整底部容器 */
+        @media (max-width: 768px) {
+            .containerii {
+                flex-direction: column;
+            }
+            .dividertty {
+                width: 100%;
+                height: 1px;
+                margin: 20px 0;
+            }
+        }
+        
+        
+    </style>
+  </head>
+  <body>
+    <!-- 顶部导航（不变） -->
+   <div class="navbar">
+    <div class="logo">
+        <a href="../index.html"><img src="../img/sy/logo.png" alt="LOGO"></a>
+    </div>
+    <div class="nav-links">
+        <a href="关于我们.html">关于我们</a>
+
+        <!-- 医美项目菜单 -->
+        <div class="menu-item">
+            <a href="#" id="menu-trigger">医美项目</a>
+            <div class="dropdown" id="dropdown-menu">
+                <!-- 动态内容将通过PHP/AJAX加载 -->
+            </div>
+        </div>
+
+       <div class="menu-item">
+    <a href="ml/女性私密.html" id="menu-trigger-nxxm">女性私密</a>
+    <div class="dropdown" id="dropdown-menu-nxxm">
+        <!-- 动态内容将通过PHP/AJAX加载 -->
+    </div>
+</div>
+        <a href="医疗护理产品.html">医疗护理产品</a>
+        <a href="最新活动.html">最新活动</a>
+        <a href="联系我们.html">联系我们</a>
+    </div>
+</div>
+
+    <!-- 图片背景（替换原视频背景）- 结构不变，样式通过CSS控制 -->
+    <div class="hero">
+        <img src="../img/sy/11.jpg" alt="诊所背景图">
+        <p class="contact-oo">医疗护理产品</p>
+        <!--<p class="contact-vv">我们期待为您提供专业的医疗服务，欢迎随时联系我们</p>-->
+    </div>
+    <br><br><br><br>
+    
+    
+    
+     <main class="max-w-7xl mx-auto">
+        <!-- 类别展示区域 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
+            <!-- 抗老类别 -->
+            <a href="anti-aging.html" class="category-card aspect-[4/5]">
+                <img src="../img/ml/4-1.jpg" alt="抗老产品背景图，展示护肤品和美容仪器" class="w-full h-full object-cover">
+                <div class="category-text flex items-center justify-center">
+                    <i class="fa fa-clock-o mr-3 text-xl"></i>补水
+                </div>
+            </a>
+            
+            <!-- 保湿类别 -->
+            <a href="moisturizing.html" class="category-card aspect-[4/5]">
+                <img src="../img/ml/4-2.jpg" alt="保湿产品背景图，展示保湿霜和精华液" class="w-full h-full object-cover">
+                <div class="category-text flex items-center justify-center">
+                    <i class="fa fa-tint mr-3 text-xl"></i>抗衰老
+                </div>
+            </a>
+            
+            <!-- 美颜类别 -->
+            <a href="beautifying.html" class="category-card aspect-[4/5]">
+                <img src="../img/ml/4-3.jpg" alt="美颜产品背景图，展示化妆品和彩妆" class="w-full h-full object-cover">
+                <div class="category-text flex items-center justify-center">
+                    <i class="fa fa-smile-o mr-3 text-xl"></i>精华
+                </div>
+            </a>
+            
+            <!-- 祛痘类别 -->
+            <a href="acne-treatment.html" class="category-card aspect-[4/5]">
+                <img src="../img/ml/4-4.jpg" alt="祛痘产品背景图，展示祛痘凝胶和洁面产品" class="w-full h-full object-cover">
+                <div class="category-text flex items-center justify-center">
+                    <i class="fa fa-medkit mr-3 text-xl"></i>面霜
+                </div>
+            </a>
+        </div>
+    </main>
+    
+    
+    <br><br><br><br>
+        <!--底部导航栏-->
+<div class="footer-nav-wrapper">
+    <div class="containerii">
+        <!-- 左侧区域 -->
+        <div class="left-col">
+            <div class="logo">
+                <img src="../img/sy/logo.png" alt="Logo">
+                <div class="title">VANCOUVER<br>LASER & SKIN CARE<br>CENTRE</div>
+            </div>
+            <div class="address">
+                <p>Vancouver 溫哥華</p>
+                <p>Neelu Brachua Center </p>
+                <p>#305-550 West Broadway </p>
+                <p>#305-550 West Broadway </p>
+                <p>V5Z 1E9</p>
+            </div>
+            <div class="time">
+                <p>週一     9:30 AM- 5:00 PM</p>
+                <p>週二     9:30 AM- 5:00 PM</p>
+                <p>週三     9:30 AM- 5:00 PM</p>
+                <p>週四     9:30 AM- 5:00 PM</p>
+                <p>週五     9:30 AM- 5:00 PM</p>
+                <p>週六     预约</p>
+                <p>週日     预约</p>
+            </div>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 中间区域 -->
+        <div class="middle-col">
+            <div class="contact">
+                <p>電話：604-278-5010</p>
+                <p>傳真：604-278-5197</p>
+                <p>電郵：info@vandoctors.com</p>
+                <br>
+                <p>Richmond 列治文</p>
+                <p>Richmond Medical Center </p>
+                <p>#630-6388 No.3 Rd. </p>
+                <p>Richmond, BC, Canada</p>
+                <p>V6Y 0L4</p>
+            </div>
+            <p><a href="联系我们.html">联系我们</a></p>
+        </div>
+        <!-- 竖线分隔 -->
+        <div class="dividertty"></div>
+        <!-- 右侧区域 -->
+        <div class="right-col">
+            <div class="qr-code">
+                <img src="../img/sy/ewm.jpg" alt="QR Code">
+                <p>成為“城市卓越醫療&醫美中心”至尊會員，享受360度無微不致的醫療關懷，請電郵 ​member@vandoctors.com</p>
+            </div>
+        </div>
+    </div>
+    </div>
+   
+
+    <!-- 交互脚本（不变） -->
+    <script>
+        const menuTrigger = document.getElementById('menu-trigger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        let hideTimeout;
+
+        function showMenu() {
+            clearTimeout(hideTimeout);
+            dropdownMenu.classList.add('show');
+        }
+
+        function hideMenu() {
+            hideTimeout = setTimeout(() => {
+                dropdownMenu.classList.remove('show');
+            }, 500);
+        }
+
+        menuTrigger.addEventListener('mouseenter', showMenu);
+        dropdownMenu.addEventListener('mouseenter', showMenu);
+        menuTrigger.addEventListener('mouseleave', hideMenu);
+        dropdownMenu.addEventListener('mouseleave', hideMenu);
+
+        // 加载下拉菜单内容（不变）
+        function loadHtmlFiles() {
+            fetch('get_html_files.php')
+                .then(response => response.json())
+                .then(files => {
+                    dropdownMenu.innerHTML = '';
+                    files.forEach(file => {
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        const displayName = file.name.replace('.html', '');
+                        link.textContent = displayName;
+                        dropdownMenu.appendChild(link);
+                    });
+                })
+                .catch(error => console.error('Error loading HTML files:', error));
+        }
+
+        window.addEventListener('DOMContentLoaded', loadHtmlFiles);
+    </script>
+    <script>
+    // ---------------------- 新增：女性私密菜单逻辑 ----------------------
+const menuTriggerNxxm = document.getElementById('menu-trigger-nxxm');
+const dropdownMenuNxxm = document.getElementById('dropdown-menu-nxxm');
+let hideTimeoutNxxm;
+
+// 显示女性私密下拉菜单
+function showMenuNxxm() {
+    clearTimeout(hideTimeoutNxxm);
+    dropdownMenuNxxm.classList.add('show');
+}
+
+// 隐藏女性私密下拉菜单
+function hideMenuNxxm() {
+    hideTimeoutNxxm = setTimeout(() => {
+        dropdownMenuNxxm.classList.remove('show');
+    }, 100); // 与医美项目保持一致的延迟隐藏时间
+}
+
+// 绑定鼠标进出事件
+menuTriggerNxxm.addEventListener('mouseenter', showMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseenter', showMenuNxxm);
+menuTriggerNxxm.addEventListener('mouseleave', hideMenuNxxm);
+dropdownMenuNxxm.addEventListener('mouseleave', hideMenuNxxm);
+
+// 加载女性私密的HTML文件列表（调用指定PHP：get_html_files_nxxm.php）
+function loadHtmlFilesNxxm() {
+    fetch('get_html_files_nxxm.php') // 这里使用指定的PHP文件
+        .then(response => response.json())
+        .then(files => {
+            dropdownMenuNxxm.innerHTML = '';
+            files.forEach(file => {
+                const link = document.createElement('a');
+                link.href = file.path;
+                const displayName = file.name.replace('.html', ''); // 去除.html后缀
+                link.textContent = displayName;
+                dropdownMenuNxxm.appendChild(link);
+            });
+        })
+        .catch(error => console.error('Error loading 女性私密 HTML files:', error));
+}
+
+// 页面加载时执行女性私密文件加载
+window.addEventListener('DOMContentLoaded', loadHtmlFilesNxxm);
+</script>
+  </body>
+</html>
