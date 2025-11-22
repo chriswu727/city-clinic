@@ -91,8 +91,8 @@
         
         <div class="form-group">
             <label for="image">上传图片</label>
-            <input type="file" id="image" name="image" accept="image/jpeg" required class="file-upload">
-            <p class="note">仅支持JPG格式图片</p>
+            <input type="file" id="image" name="image" accept="image/jpeg,image/jpg" required class="file-upload">
+            <p class="note">支持JPG和JPEG格式图片</p>
         </div>
         
         <button type="submit" name="save">保存</button>
