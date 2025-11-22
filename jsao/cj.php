@@ -91,8 +91,8 @@
         
         <div class="form-group">
             <label for="image">上传图片</label>
-            <input type="file" id="image" name="image" accept="image/jpeg" required class="file-upload">
-            <p class="note">仅支持JPG格式图片</p>
+            <input type="file" id="image" name="image" accept="image/jpeg,image/jpg,image/png" required class="file-upload">
+            <p class="note">支持JPG、JPEG、PNG格式图片</p>
         </div>
         
         <button type="submit" name="save">保存</button>
@@ -115,15 +115,29 @@
         // 处理图片上传
         $imageError = '';
         if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-            // 检查文件是否为JPG
-            $fileInfo = @getimagesize($_FILES["image"]["tmp_name"]);
-            if($fileInfo === false || $fileInfo['mime'] != 'image/jpeg') {
-                $imageError = '请上传有效的JPG图片文件';
+            // 检查文件扩展名
+            $fileExtension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+            $allowedExts = ['jpg', 'jpeg', 'png'];
+            
+            if (!in_array($fileExtension, $allowedExts)) {
+                $imageError = '请上传有效的图片文件（支持 JPG、JPEG、PNG 格式）';
             } else {
-                // 保存图片为sj1.jpg
-                $targetFile = 'sj1.jpg';
-                if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                    $imageError = '图片上传失败，请重试';
+                // 验证是否真的是图片文件
+                $fileInfo = @getimagesize($_FILES["image"]["tmp_name"]);
+                if($fileInfo === false) {
+                    $imageError = '上传的文件不是有效的图片文件';
+                } else {
+                    // 检查MIME类型
+                    $allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    if (!in_array($fileInfo['mime'], $allowedMimes)) {
+                        $imageError = '图片格式不正确，请上传 JPG、JPEG 或 PNG 格式';
+                    } else {
+                        // 保存图片为sj1.扩展名（保持原扩展名）
+                        $targetFile = 'sj1.' . $fileExtension;
+                        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                            $imageError = '图片上传失败，请重试';
+                        }
+                    }
                 }
             }
         } else {

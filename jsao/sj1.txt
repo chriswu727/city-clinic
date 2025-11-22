@@ -1,4 +1,4 @@
-s1p标题：botox减价
-s1p简介：botox大减价
-s1p主文案：大减价啦 不要钱啦
-s1p备注：http://xxt.soso007.cn/cj/html/botox.html
+s1p标题：降价介绍1
+s1p简介：botox
+s1p主文案：降价了，点击详情页了解
+s1p备注：http://localhost:8000/cj/html/botox%E8%82%89%E6%AF%92%E6%9D%86%E8%8F%8C%E6%B3%A8%E5%B0%84.html
